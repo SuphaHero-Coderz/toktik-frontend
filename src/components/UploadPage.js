@@ -24,13 +24,32 @@ import {
 const UploadPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isUploading, setIsUploading] = useState(false);
+
+	// For little popups at the bottom of the screen
 	const toast = useToast();
 
+	/**
+	 * Returns a random filename 
+	 * 
+	 * @returns random filename in the form of a `timestamp_randomstring`
+	 */
+	const generateRandomFileName = () => {
+		const timestamp = new Date().getTime();
+		const randomString = Math.random().toString(36).substring(7);
+		return `${timestamp}_${randomString}`;
+	};
+
+	/**
+	 * Uploads a file object to S3 given a presigned URL
+	 * 
+	 * @param {File} file 
+	 * @param {string} presignedUrl 
+	 */
 	async function uploadToS3(file, presignedUrl) {
 		try {
 			await axios.put(presignedUrl, file, {
 				headers: {
-					'Content-Type': 'video/*'
+					'Content-Type': 'video/*',
 				},
 				timeout: (30 * 60 * 1000),
 			});
@@ -46,7 +65,7 @@ const UploadPage = () => {
 			toast({
 				title: 'Failure',
 				description: 'Failed to upload video.',
-				status: 'failure',
+				status: 'error',
 				duration: 3000,
 				isClosable: true,
 			});
@@ -54,16 +73,23 @@ const UploadPage = () => {
 
 		setIsUploading(false);
 
+		// Redirect back to home screen
 		setTimeout(() => {
 			window.location.href = '/';
 		}, 3000);
 	}
 
+	/**
+	 * Fetches presigned URL from backend and then initiates upload process
+	 * 
+	 * @param {*} data 
+	 */
 	function onFormSubmit(data) {
 		setIsUploading(true);
 
 		const file = data.videoFile[0];
-		axios.get(`http://localhost:8000/generate_presigned_url/${file.name}`).then((response) => {
+		const randomFileName = generateRandomFileName();
+		axios.get(`http://localhost:8000/generate_presigned_url/${randomFileName}`).then((response) => {
 			const presignedUrl = response.data["presigned_url"];
 			uploadToS3(file, presignedUrl);
 		});
@@ -116,4 +142,3 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
-

@@ -10,7 +10,8 @@ function App() {
 			<Router>
 				<NavBar />
 				<Routes>
-				  <Route path="/upload" element={<UploadPage />} />
+					<Route path="/" element={<div></div>} />
+					<Route path="/upload" element={<UploadPage />} />
 				</Routes>
 			</Router>
 		</ChakraProvider>
