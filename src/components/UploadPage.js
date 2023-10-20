@@ -17,7 +17,8 @@ import {
 	FormErrorMessage,
 	FormLabel,
 	FormHelperText,
-	useToast
+	useToast,
+	Progress
 } from '@chakra-ui/react'
 
 
@@ -39,13 +40,35 @@ const UploadPage = () => {
 		return `${timestamp}_${randomString}`;
 	};
 
+	async function generatePresignedUrl(objectKey) {
+		var presignedUrl;
+
+		try {
+			await axios.get(`http://localhost:8000/generate_presigned_url/${objectKey}`).then((response) => {
+				presignedUrl = response.data["presigned_url"];
+			});
+		} catch (error) {
+			toast({
+				title: 'Failure',
+				description: 'Failed to fetch presigned URL.',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		}
+
+		return presignedUrl;
+	}
+
 	/**
 	 * Uploads a file object to S3 given a presigned URL
 	 * 
 	 * @param {File} file 
 	 * @param {string} presignedUrl 
 	 */
-	async function uploadToS3(file, presignedUrl) {
+	async function uploadToS3(file) {
+		const objectKey = generateRandomFileName();
+		const presignedUrl = await generatePresignedUrl(objectKey);
 		try {
 			await axios.put(presignedUrl, file, {
 				headers: {
@@ -61,7 +84,6 @@ const UploadPage = () => {
 				isClosable: true,
 			});
 		} catch (error) {
-			console.error('Error uploading file:', error);
 			toast({
 				title: 'Failure',
 				description: 'Failed to upload video.',
@@ -72,11 +94,16 @@ const UploadPage = () => {
 		}
 
 		setIsUploading(false);
+		await notifyBackendOfUploadSuccess(objectKey);
 
 		// Redirect back to home screen
 		setTimeout(() => {
 			window.location.href = '/';
 		}, 3000);
+	}
+
+	async function notifyBackendOfUploadSuccess(objectKey) {
+		await axios.post("http://localhost:8000/process_video/", { object_key: objectKey });
 	}
 
 	/**
@@ -85,14 +112,10 @@ const UploadPage = () => {
 	 * @param {*} data 
 	 */
 	function onFormSubmit(data) {
-		setIsUploading(true);
-
 		const file = data.videoFile[0];
-		const randomFileName = generateRandomFileName();
-		axios.get(`http://localhost:8000/generate_presigned_url/${randomFileName}`).then((response) => {
-			const presignedUrl = response.data["presigned_url"];
-			uploadToS3(file, presignedUrl);
-		});
+
+		setIsUploading(true);
+		uploadToS3(file);
 	}
 
 	return (
@@ -130,10 +153,14 @@ const UploadPage = () => {
 								</FormErrorMessage>
 							</GridItem>
 						</Grid>
-						<Flex alignItems="right" mt="10">
-							<Spacer />
+						<Grid templateColumns='repeat(2, 1fr)' gap={10} mt="10">
+							<GridItem pt="5">
+							{ isUploading && <Progress size='xs' isIndeterminate /> }
+							</GridItem>
+							<GridItem justify="flex-end" align="right">
 							<Button type="submit" isLoading={isUploading} loadingText="Uploading" >Upload</Button>
-						</Flex>
+							</GridItem>
+						</Grid>
 					</FormControl>
 				</form>
 			</Container>
