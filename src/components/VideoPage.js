@@ -1,15 +1,14 @@
 import { AspectRatio } from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
-import { Image } from '@chakra-ui/react'
-import { Flex,  Stack, Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Flex,  Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import './VideoPage.css'
 
 function CommentAndVideoTaps() {
     return (
 <Tabs isFitted>
-          <TabList pos='relative' position="static">
+          <TabList style={{ position: "sticky", top: "0" }} bg="white" mt='5px'>
             <Tab>Comments</Tab>
             <Tab>Videos</Tab>
           </TabList>
@@ -134,7 +133,8 @@ function CommentAndVideoTaps() {
 
 function UserCard() {
  return (
-     <Card w = "90%">
+     <Square h="100%">
+     <Card w = "90%" mt='10px' bg='#f8f8f8'>
       <CardBody>
         <Flex spacing='4'>
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -150,22 +150,29 @@ function UserCard() {
           </Text>
       </CardBody>
     </Card>
+    </Square>
  );
+}
+
+function Video() {
+    return (
+        <Square h="100%">
+            <AspectRatio w="100%">
+              <iframe
+                title='Rocky'
+                src='https://www.youtube.com/embed/_YYmfM2TfUA'
+                allowFullScreen
+              />
+            </AspectRatio>
+        </Square>
+    );
 }
 
 function VideoPage() {
   return (
           <Grid templateColumns='repeat(6, 1fr)' minHeight="100vh" minWidth="100vh" overflowY="hidden">
                 <GridItem colSpan={4}>
-                    <Square h="100%">
-                    <AspectRatio w="100%">
-                      <iframe
-                        title='Rocky'
-                        src='https://www.youtube.com/embed/_YYmfM2TfUA'
-                        allowFullScreen
-                      />
-                    </AspectRatio>
-                    </Square>
+                    <Video />
                 </GridItem>
                 <GridItem colSpan={2} overflowY="scroll" maxHeight="100vh">
                     <VStack h='100%'>
