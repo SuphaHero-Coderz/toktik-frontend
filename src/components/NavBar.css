@@ -5,6 +5,8 @@
     background: rgb(245, 245, 245);
     padding: 1rem;
     color: #333;
+    position: fixed;
+    width: 100%;
   }
   
   .logo {
