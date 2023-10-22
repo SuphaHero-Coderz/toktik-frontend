@@ -12,6 +12,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<div></div>} />
 					<Route path="/upload" element={<UploadPage />} />
+					<Route path="/video" element={<VideoPage />} />
 				</Routes>
 			</Router>
 		</ChakraProvider>
