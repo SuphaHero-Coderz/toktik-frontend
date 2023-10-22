@@ -94,7 +94,7 @@ const UploadPage = () => {
 		}
 
 		setIsUploading(false);
-		await notifyBackendOfUploadSuccess(objectKey);
+		notifyBackendOfUploadSuccess(objectKey);
 
 		// Redirect back to home screen
 		setTimeout(() => {
