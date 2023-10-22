@@ -44,7 +44,7 @@ const UploadPage = () => {
 		var presignedUrl;
 
 		try {
-			await axios.get(`http://localhost:8000/generate_presigned_url/${objectKey}`).then((response) => {
+			await axios.get(`http://localhost:80/generate_presigned_url/${objectKey}`).then((response) => {
 				presignedUrl = response.data["presigned_url"];
 			});
 		} catch (error) {
@@ -103,7 +103,7 @@ const UploadPage = () => {
 	}
 
 	async function notifyBackendOfUploadSuccess(objectKey) {
-		await axios.post("http://localhost:8000/process_video/", { object_key: objectKey });
+		await axios.post("http://localhost:80/process_video/", { object_key: objectKey });
 	}
 
 	/**
