@@ -8,18 +8,15 @@ export const UserProvider = (props) => {
 
     useEffect(() => {
         const fetchUser = async () => {
+            localStorage.setItem("awesomeToken", token);
             var response
 			try {
 			await axios.get(`http://localhost:80/api/users/me`,
                 { headers: { Authorization: 'Bearer ' + token }}).then((response) => {
-				response = response.data;
 			});
             } catch (error) {
-                console.log(error);
                 setToken(null)
             }
-            console.log(response);
-            localStorage.setItem("awesomeToken", token);
         };
         fetchUser();
     }, [token]);

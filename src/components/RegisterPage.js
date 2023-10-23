@@ -39,7 +39,6 @@ const RegisterPage = () => {
 			await axios.post(`http://localhost:80/api/users`, { username: data.username, hashed_password: data.password }).then((response) => {
 				token = response.data["access_token"];
 			});
-			console.log(token);
             setToken(token);
 			await delay(3000);
 			toast({
@@ -60,9 +59,9 @@ const RegisterPage = () => {
 			});
 		}
 		setIsSubmitting(false);
-		// setTimeout(() => {
-		// 	window.location.href = '/';
-		// }, 3000);
+		setTimeout(() => {
+			window.location.href = '/';
+		}, 3000);
 	}
 
 	return (
