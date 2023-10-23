@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
@@ -21,18 +21,26 @@ import {
 	useToast
 
 } from '@chakra-ui/react'
+import { UserContext } from "./UserContext";
 
 const RegisterPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+    const [, setToken] = useContext(UserContext);
+    
 	
 	const toast = useToast();
 	const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
 
 	async function onFormSubmit(data) {
 		setIsSubmitting(true);
+		var token
 		try {
-			//await axios.post("http://localhost:80/login/", { username: data.username, password: data.password });
+			await axios.post(`http://localhost:80/api/users`, { username: data.username, hashed_password: data.password }).then((response) => {
+				token = response.data["access_token"];
+			});
+			console.log(token);
+            setToken(token);
 			await delay(3000);
 			toast({
 				title: 'Success',
@@ -42,6 +50,7 @@ const RegisterPage = () => {
 				isClosable: true,
 			});
 		} catch (error) {
+			console.log(error);
 			toast({
 				title: 'Failure',
 				description: `Failed to login: {error}`,
@@ -51,9 +60,9 @@ const RegisterPage = () => {
 			});
 		}
 		setIsSubmitting(false);
-		setTimeout(() => {
-			window.location.href = '/';
-		}, 3000);
+		// setTimeout(() => {
+		// 	window.location.href = '/';
+		// }, 3000);
 	}
 
 	return (
