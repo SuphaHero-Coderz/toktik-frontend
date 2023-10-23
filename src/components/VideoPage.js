@@ -1,5 +1,6 @@
 import { AspectRatio } from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
+import { useLocation } from "react-router-dom"
 import { Box } from '@chakra-ui/react'
 import { Flex,  Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
@@ -157,13 +158,13 @@ function UserCard() {
  );
 }
 
-function Video() {
+function Video(data) {
 	const [signedM3U8Url, setSignedM3U8Url] = useState(null);
 	const [token, setToken] = useState(null);
-	const object_key = "1697963312806_dt6ake";
+	const objectKey = data.objectKey;
 	useEffect(() => {
 			try {
-				axios.get(`http://localhost:80/view_video/${object_key}`).then((response) => {
+				axios.get(`http://localhost:8000/view_video/${objectKey}`).then((response) => {
 					setSignedM3U8Url(response.data.m3u8_url);
 					setToken(response.data.token);
 					console.log(response);
@@ -178,6 +179,7 @@ function Video() {
 		<ReactPlayer
 			url={signedM3U8Url}
 			controls={true}
+			playing={true}
 			width="100%"
 			height="100%"
 			config={{
@@ -208,10 +210,12 @@ function Video() {
 }
 
 function VideoPage() {
+	const location = useLocation();
+	const objectKey = location.state?.object_key;
   return (
           <Grid templateColumns='repeat(6, 1fr)' minHeight="100vh" minWidth="100vh" overflowY="hidden">
                 <GridItem colSpan={4}>
-                    <Video />
+                    <Video objectKey={objectKey}/>
                 </GridItem>
                 <GridItem colSpan={2} overflowY="scroll" maxHeight="100vh">
                     <VStack h='100%'>

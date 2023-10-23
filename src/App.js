@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import UploadPage from './components/UploadPage';
 import LoginPage from './components/LoginPage';
 import VideoPage from './components/VideoPage';
+import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
@@ -11,9 +12,9 @@ function App() {
 	return (
 		<ChakraProvider>
 			<Router>
-				<NavBar />
+			<NavBar />
 				<Routes>
-					<Route path="/" element={<div></div>} />
+					<Route path="/" element={<HomePage />} />
 					<Route path="/upload" element={<UploadPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/register" element={<RegisterPage />} />

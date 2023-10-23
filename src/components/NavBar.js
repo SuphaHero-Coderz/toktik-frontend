@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
 import './NavBar.css'
 
 const NavBar = () => {
 
   return (
-    <nav className="navbar">
-      <div className="logo">
-        <img src="/images/toktik-logo.png" alt="TokTik Logo" style={{ height: '40px', marginRight: '10px' }} />
-      </div>
-      <ul className="navList">
-        <li className="navItem"><Link to="/">Home</Link></li>
-        <li className="navItem">
-          <Link to="/upload">Upload</Link>
-        </li>
-      </ul>
-    </nav>
+	  <Box bg="gray.200" p={4}>
+      <Flex maxW="100%" width="100%" align="center">
+        {/* Logo on the left */}
+        <Box>
+          <Image src="/images/toktik-logo.png" alt="Logo" width="auto" height="40px" />
+        </Box>
+
+        {/* Navigation items on the right */}
+        <Spacer />
+        <Box>
+	  	<Link to="/">Home</Link>
+        </Box>
+      </Flex>
+    </Box>
   );
 }
 
