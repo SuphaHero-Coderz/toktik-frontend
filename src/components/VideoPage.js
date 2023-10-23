@@ -3,6 +3,9 @@ import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { Flex,  Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player';
 import './VideoPage.css'
 
 function CommentAndVideoTaps() {
@@ -155,14 +158,50 @@ function UserCard() {
 }
 
 function Video() {
+	const [signedM3U8Url, setSignedM3U8Url] = useState(null);
+	const [token, setToken] = useState(null);
+	const object_key = "1697963312806_dt6ake";
+	useEffect(() => {
+			try {
+				axios.get(`http://localhost:80/view_video/${object_key}`).then((response) => {
+					setSignedM3U8Url(response.data.m3u8_url);
+					setToken(response.data.token);
+					console.log(response);
+				});
+			} catch (error) {
+				console.log(error);
+			}
+	}, []);
     return (
-        <Square h="100%">
+        <Square h="100%" bg="black">
             <AspectRatio w="100%">
-              <iframe
-                title='Rocky'
-                src='https://www.youtube.com/embed/_YYmfM2TfUA'
-                allowFullScreen
-              />
+		<ReactPlayer
+			url={signedM3U8Url}
+			controls={true}
+			width="100%"
+			height="100%"
+			config={{
+			  file: {
+				hlsOptions: {
+				  xhrSetup: function xhrSetup(xhr, url) {
+					xhr.setRequestHeader(
+					  "Access-Control-Allow-Headers",
+					  "Content-Type, Accept, X-Requested-With"
+					);
+					xhr.setRequestHeader(
+					  "Access-Control-Allow-Origin",
+					  "*"
+					);
+					xhr.setRequestHeader(
+					  "Access-Control-Allow-Credentials",
+					  "true"
+					);
+					xhr.open('GET', url + token); // this is your token: ?Policy=foo&Key-Pair-Id=bar&Signature=foobar
+				  }
+				}
+			  }
+			}}
+		  />
             </AspectRatio>
         </Square>
     );
