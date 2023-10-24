@@ -11,7 +11,7 @@ const LogoutButton = () => {
     };
 
     return (
-        <div>{ token && <Button variant='link' onClick={handleLogout}>Logout</Button>}</div>
+        <div>{ token && <Button variant='link' color="#FF00C3" backdropFilter="auto" backdropContrast="90%" onClick={handleLogout}>Logout</Button>}</div>
     );
 };
 

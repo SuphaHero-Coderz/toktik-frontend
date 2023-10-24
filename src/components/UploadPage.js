@@ -128,8 +128,8 @@ const UploadPage = () => {
 	}
 
 	return (
-		<Flex height="100vh" align="center" justify="center">
-			<Container maxW="container.md" mt="10" p="10" shadow="md" rounded="md">
+		<Flex height="100vh" align="center" justify="center" backgroundImage="url('https://64.media.tumblr.com/c3e2da7367ed718b4ef628a244cd9129/tumblr_p4o3bnVtto1qeyvpto1_500.gif')" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+			<Container maxW="container.md" mt="10" p="10" shadow="base" rounded="md" bg="white">
 				<Heading mb="10">Upload File</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>

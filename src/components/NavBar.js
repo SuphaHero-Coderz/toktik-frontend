@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Image, Text, Grid, GridItem } from '@chakra-ui/react';
 import './NavBar.css'
 import LogoutButton from "./LogoutButton";
 import {UserContext} from "./UserContext";
@@ -8,7 +8,7 @@ import {UserContext} from "./UserContext";
 const NavBar = () => {
   const [token, setToken] = useContext(UserContext)
   return (
-	  <Box bg="gray.200" p={4}>
+	  <Box bgGradient='linear(to-l, #482980, #FF0080)' p={4} pos="fixed" w="100%">
       <Flex maxW="100%" width="100%" align="center">
         {/* Logo on the left */}
         <Box>
@@ -19,13 +19,27 @@ const NavBar = () => {
 
         {/* Navigation items on the right */}
         <Spacer />
-        <Box>
-	  	{token && <Link to="/">Home</Link> }
-	  	{token && <Link to="/upload">Upload</Link> }
-	  	{token && <Link to="/">My Videos</Link> }
-	  	{!token && <Link to="/login">Login</Link>}
-	  	{!token && <Link to="/register">Register</Link>}
+        <Box color="white">
+	  	<Grid templateColumns="repeat(6, 1fr)">
+	  	<GridItem>
+	  	{token && <Link to="/"><Text as='b'>Home</Text></Link> }
+	  	</GridItem>
+	  	<GridItem>
+	  	{token && <Link to="/upload"><Text as='b'>Upload</Text></Link> }
+	  	</GridItem>
+	  	<GridItem>
+	  	{token && <Link to="/my-videos"><Text as='b'>My Videos</Text></Link> }
+	  	</GridItem>
+	  	<GridItem>
+	  	{!token && <Link to="/login"><Text as='b'>Login</Text></Link>}
+	  	</GridItem>
+	  	<GridItem>
+	  	{!token && <Link to="/register"><Text as='b'>Register</Text></Link>}
+	  	</GridItem>
+	  	<GridItem>
 	  	<LogoutButton />
+	  	</GridItem>
+	  	</Grid>
         </Box>
       </Flex>
     </Box>

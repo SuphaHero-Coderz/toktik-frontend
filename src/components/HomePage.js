@@ -61,7 +61,7 @@ const HomePage = () => {
 	}
 
 	return (
-		<Flex height="100vh" maxW="full">
+		<Flex height="100vh" maxW="full" pt="10">
 		<Grid templateRows="repeat(2, 0.2fr)" w="full" mr="40">
 			<GridItem w="full">
 				<Container mt="100px" mx="20" maxW="full" w="full">

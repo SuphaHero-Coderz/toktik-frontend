@@ -75,25 +75,25 @@ const LoginPage = () => {
 	}
 
 	return (
-		<Flex height="100vh" align="center" justify="center">
-			<Container maxW="container.sm" mt="10" p="10" shadow="md" rounded="md">
-				<Heading mb="10">Login</Heading>
+		<Flex height="100vh" align="center" justify="center" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+			<Container maxW="container.sm" mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
+				<Heading mb="5">Login</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>
 					<FormControl isInvalid={errors.username || errors.password}>
-								<FormLabel htmlFor="username">Username</FormLabel>
+								<FormLabel htmlFor="username" fontWeight="bold">Username</FormLabel>
 								<Input id="username" type='text' {...register("username", { required: "Username is required!" })} />
 								<FormErrorMessage>
 									{errors.username && errors.username.message}
 								</FormErrorMessage>
-								<FormLabel mt="5">Password</FormLabel>
+								<FormLabel mt="5" fontWeight="bold">Password</FormLabel>
 								<Input type='password' {...register("password", { required: "Password is required!" })} />
 								<FormErrorMessage>
 									{errors.password && errors.password.message}
 								</FormErrorMessage>
 							<Grid mt="10">
 								<GridItem justify="flex-end" align="right">
-								<Button type="submit" color="white" bg="green.400" isLoading={isSubmitting} loadingText="Loading">Submit</Button>	
+								<Button type="submit" color="white" bg="#673AB7" isLoading={isSubmitting} loadingText="Loading">Submit</Button>	
 								</GridItem>
 							</Grid>
 					</FormControl>
