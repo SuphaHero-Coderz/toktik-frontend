@@ -66,9 +66,7 @@ const UploadPage = () => {
 	 * @param {File} file 
 	 * @param {string} presignedUrl 
 	 */
-	async function uploadToS3(file) {
-		const objectKey = generateRandomFileName();
-		const presignedUrl = await generatePresignedUrl(objectKey);
+	async function uploadToS3(file, presignedUrl) {
 		try {
 			await axios.put(presignedUrl, file, {
 				headers: {
@@ -93,17 +91,10 @@ const UploadPage = () => {
 			});
 		}
 
-		setIsUploading(false);
-		await notifyBackendOfUploadSuccess(objectKey);
-
-		// Redirect back to home screen
-		setTimeout(() => {
-			window.location.href = '/';
-		}, 3000);
 	}
 
-	async function notifyBackendOfUploadSuccess(objectKey) {
-		await axios.post("http://localhost:80/process_video/", { object_key: objectKey });
+	async function notifyBackendOfUploadSuccess(videoInfo) {
+		await axios.post("http://localhost:80/process_video/", videoInfo);
 	}
 
 	/**
@@ -111,11 +102,29 @@ const UploadPage = () => {
 	 * 
 	 * @param {*} data 
 	 */
-	function onFormSubmit(data) {
+	async function onFormSubmit(data) {
+		const objectKey = generateRandomFileName();
+		const presignedUrl = await generatePresignedUrl(objectKey);
 		const file = data.videoFile[0];
 
+		const videoInfo = {
+			"object_key" : objectKey,
+			"video_name" : data.videoName,
+			"video_description" : data.videoDescription,
+		}
+
 		setIsUploading(true);
-		uploadToS3(file);
+		await uploadToS3(file, presignedUrl);
+		setIsUploading(false);
+
+		console.log(videoInfo);
+		const response = await notifyBackendOfUploadSuccess(videoInfo);
+		console.log(response);
+
+		// Redirect back to home screen
+		setTimeout(() => {
+			window.location.href = '/';
+		}, 3000);
 	}
 
 	return (

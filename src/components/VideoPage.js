@@ -174,8 +174,9 @@ function Video(data) {
 			}
 	}, []);
     return (
-        <Square h="100%" bg="black">
-            <AspectRatio w="100%">
+		<AspectRatio>
+		<Square>
+
 		<ReactPlayer
 			url={signedM3U8Url}
 			controls={true}
@@ -204,8 +205,8 @@ function Video(data) {
 			  }
 			}}
 		  />
-            </AspectRatio>
         </Square>
+		</AspectRatio>
     );
 }
 
