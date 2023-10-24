@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
 import './NavBar.css'
+import LogoutButton from "./LogoutButton";
+import {UserContext} from "./UserContext";
 
 const NavBar = () => {
-
+  const [token, setToken] = useContext(UserContext)
   return (
 	  <Box bg="gray.200" p={4}>
       <Flex maxW="100%" width="100%" align="center">
@@ -17,6 +19,10 @@ const NavBar = () => {
         <Spacer />
         <Box>
 	  	<Link to="/">Home</Link>
+	  	{!token && <Link to="/upload">Upload</Link>}
+	  	{!token && <Link to="/login">Upload</Link>}
+	  	{!token && <Link to="/register">Upload</Link>}
+	  	<LogoutButton />
         </Box>
       </Flex>
     </Box>

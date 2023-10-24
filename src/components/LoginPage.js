@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
@@ -21,18 +21,36 @@ import {
 	useToast
 
 } from '@chakra-ui/react';
+import {UserContext} from "./UserContext";
 
 const LoginPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [, setToken] = useContext(UserContext);
 	
 	const toast = useToast();
 	const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
 
-	async function onFormSubmit(data) {
+	async function onFormSubmit(form_data) {
 		setIsSubmitting(true);
+		var token
 		try {
-			//await axios.post("http://localhost:80/login/", { username: data.username, password: data.password });
+			let data = JSON.stringify(`grant_type=&username=${form_data.username}&password=${form_data.password}&scope=&client_id=&client_secret=`);
+
+			let config = {
+			  method: 'post',
+			  url: 'http://localhost:80/api/token',
+			  headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			  },
+			  data : data
+			};
+
+			await axios.request(config).then((response) => {
+				token = response.data["access_token"];
+				console.log(response);
+			});
+			setToken(token);
 			await delay(3000);
 			toast({
 				title: 'Success',

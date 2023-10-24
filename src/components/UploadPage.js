@@ -90,7 +90,6 @@ const UploadPage = () => {
 				isClosable: true,
 			});
 		}
-
 	}
 
 	async function notifyBackendOfUploadSuccess(videoInfo) {
