@@ -12,7 +12,9 @@ const NavBar = () => {
       <Flex maxW="100%" width="100%" align="center">
         {/* Logo on the left */}
         <Box>
-          <Image src="/images/toktik-logo.png" alt="Logo" width="auto" height="40px" />
+          <Link to="/">
+			  <Image src="/images/toktik-logo.png" alt="Logo" width="auto" height="40px" />
+	  	  </Link>
         </Box>
 
         {/* Navigation items on the right */}
