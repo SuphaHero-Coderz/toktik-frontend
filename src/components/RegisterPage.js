@@ -66,7 +66,7 @@ const RegisterPage = () => {
 
 	return (
 		<Flex height="100vh" align="center" justify="center" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
-			<Container maxW="container.sm" mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
+			<Container maxW={["50%", "50%", "25%"]} mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
 				<Heading mb="5">Register</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>

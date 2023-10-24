@@ -128,8 +128,8 @@ const UploadPage = () => {
 	}
 
 	return (
-		<Flex height="100vh" align="center" justify="center" backgroundImage="url('https://64.media.tumblr.com/c3e2da7367ed718b4ef628a244cd9129/tumblr_p4o3bnVtto1qeyvpto1_500.gif')" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
-			<Container maxW="container.md" mt="10" p="10" shadow="base" rounded="md" bg="white">
+		<Flex height="100vh" align="center" justify="center" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+			<Container maxW="container.md" mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
 				<Heading mb="10">Upload File</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>
@@ -167,7 +167,7 @@ const UploadPage = () => {
 							{ isUploading && <Progress size='xs' isIndeterminate /> }
 							</GridItem>
 							<GridItem justify="flex-end" align="right">
-							<Button type="submit" isLoading={isUploading} loadingText="Uploading" >Upload</Button>
+							<Button type="submit" bg="#673AB7" color="white" isLoading={isUploading} loadingText="Uploading" >Upload</Button>
 							</GridItem>
 						</Grid>
 					</FormControl>
