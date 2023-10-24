@@ -25,6 +25,7 @@ import {
 const UploadPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isUploading, setIsUploading] = useState(false);
+	const [token, _] = useState(localStorage.getItem("awesomeToken"))
 
 	// For little popups at the bottom of the screen
 	const toast = useToast();
@@ -93,7 +94,7 @@ const UploadPage = () => {
 	}
 
 	async function notifyBackendOfUploadSuccess(videoInfo) {
-		await axios.post("http://localhost:80/process_video/", videoInfo);
+		await axios.post("http://localhost:80/process_video/", videoInfo, { headers : { Authorization: 'Bearer ' + token }});
 	}
 
 	/**

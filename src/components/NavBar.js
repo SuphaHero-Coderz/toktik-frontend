@@ -18,10 +18,11 @@ const NavBar = () => {
         {/* Navigation items on the right */}
         <Spacer />
         <Box>
-	  	<Link to="/">Home</Link>
-	  	{!token && <Link to="/upload">Upload</Link>}
-	  	{!token && <Link to="/login">Upload</Link>}
-	  	{!token && <Link to="/register">Upload</Link>}
+	  	{token && <Link to="/">Home</Link> }
+	  	{token && <Link to="/upload">Upload</Link> }
+	  	{token && <Link to="/">My Videos</Link> }
+	  	{!token && <Link to="/login">Login</Link>}
+	  	{!token && <Link to="/register">Register</Link>}
 	  	<LogoutButton />
         </Box>
       </Flex>

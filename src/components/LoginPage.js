@@ -33,7 +33,7 @@ const LoginPage = () => {
 
 	async function onFormSubmit(form_data) {
 		setIsSubmitting(true);
-		var token
+		var token;
 		try {
 			let data = JSON.stringify(`grant_type=&username=${form_data.username}&password=${form_data.password}&scope=&client_id=&client_secret=`);
 
