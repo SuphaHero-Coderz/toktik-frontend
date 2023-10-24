@@ -34,25 +34,26 @@ import {
 } from '@chakra-ui/react'
 
 const TableRow = ({ videoInfo }) => {
+	console.log(videoInfo);
 	return(
 		<Tr>
-			<Td>videoInfo.video_name</Td>
-			<Td>videoInfo.video_description</Td>
-			<Td>videoInfo.processed</Td>
+			<Td>{videoInfo.video_name}</Td>
+			<Td>{videoInfo.video_description}</Td>
+			<Td>{videoInfo.processed.toString()}</Td>
+			<Td><Button>Edit</Button></Td>
 		</Tr>
 	);
 }
 
 const UserVideosPage = () => {
 	const [token, _] = useState(localStorage.getItem("awesomeToken"))
-	var tableRows = [];
+	const [userVideos, setUserVideos] = useState([]);
 
 	async function getAllUserVideos() {
 		var videoList = [];
 		try {
 			const response = await axios.get(`http://localhost:80/api/videos`, { headers: { Authorization : 'Bearer ' + token }});
 			videoList = response.data;
-			console.log(response);
 		} catch (error) {
 			console.error("NOOOOOOOOOOOOOOOOOOOOOOO");
 		}
@@ -62,41 +63,42 @@ const UserVideosPage = () => {
 
 	useEffect(() => {
 		getAllUserVideos().then((videoList) => {
-			tableRows = videoList;
+			setUserVideos(videoList);
 		});
-
 	}, []);
 
 	return (
-		<Flex height="100vh" maxW="full">
-			<Container mt="100px" mx="20" maxW="full" w="full">
-			  <Heading mb="5">
+		<Flex height="100vh" maxW="full" mr="20">
+			<Container mt="100px" maxW="full" w="full" mx="10">
+			  <Heading mb="5" mx="5">
 				My Videos
 			  </Heading>
-				<Divider mb="5" />
-				<Container maxW="full">
-		<TableContainer>
-		  <Table variant='simple'>
-			<Thead>
-			  <Tr>
-				<Th>Name</Th>
-				<Th>Description</Th>
-				<Th>Processing</Th>
-			  </Tr>
-			</Thead>
-			<Tbody>
-				{
-				tableRows.map((video, index) => (
-					<Tr key={index}>
-						<Td>{video.video_name}</Td>
-						<Td>{video.video_description}</Td>
-						<Td>{video.processing}</Td>
-					</Tr>
-				))
-				}
-			</Tbody>
-		  </Table>
-		</TableContainer>
+				<Divider mb="5" mx="5"/>
+				<Container maxW="full" shadow="md" mx="5">
+				<TableContainer>
+				  <Table variant='simple'>
+					<Thead>
+					  <Tr>
+						<Th>Name</Th>
+						<Th>Description</Th>
+						<Th>Processing</Th>
+						<Th>Options</Th>
+					  </Tr>
+					</Thead>
+					<Tbody>
+						<Tr>
+							<Td>Name</Td>
+							<Td>Description</Td>
+							<Td>In progress</Td>
+							<Td>
+							<Button mr="5" colorScheme="yellow">Edit</Button>
+							<Button colorScheme="red">Delete</Button>
+							</Td>
+						</Tr>
+					{userVideos.map((video) => (<TableRow videoInfo={video}/>) )}
+					</Tbody>
+				  </Table>
+				</TableContainer>
 				</Container>
 			</Container>
 		</Flex>

@@ -12,9 +12,8 @@ import './VideoPage.css'
 function CommentAndVideoTaps() {
     return (
 <Tabs isFitted>
-          <TabList style={{ position: "sticky", top: "0" }} bg="white" mt='5px'>
+          <TabList style={{ position: "sticky", top: "0" }} bg="white" mt='5px' mr='4'>
             <Tab>Comments</Tab>
-            <Tab>Videos</Tab>
           </TabList>
           <TabPanels>
             <TabPanel >
@@ -127,30 +126,30 @@ function CommentAndVideoTaps() {
                       <Text>Creator, Chakra UI</Text>
                 </Box>
             </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
           </TabPanels>
         </Tabs>
     );
 }
 
-function UserCard() {
+function UserCard(data) {
  return (
      <Square h="100%">
-     <Card w = "90%" mt='10px' bg='#f8f8f8'>
+     <Card w = "100%" mt='10px' bg='#f8f8f8' mr='4'>
       <CardBody>
-        <Flex spacing='4'>
+        <Flex spacing='4' mb="4">
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+            <Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
             <Box>
-              <Heading size='sm'>Segun Adebayo</Heading>
-              <Text>Creator, Chakra UI</Text>
+              <Text>Username</Text>
+              <Text>12/9/2023 -- 12:30pm</Text>
             </Box>
           </Flex>
         </Flex>
+          <Heading size='sm'>
+	 		Video Name
+          </Heading>
           <Text>
-                Kiss me on my hot mouse.
+	 		This is the description for the video.
           </Text>
       </CardBody>
     </Card>
