@@ -22,7 +22,7 @@ const NavBar = () => {
         <Box color="white">
 	  	<Grid templateColumns="repeat(6, 1fr)">
 	  	<GridItem>
-	  	{token && <Link to="/"><Text as='b'>Home</Text></Link> }
+	  	{!token && <Link to="/"><Text as='b'>Home</Text></Link> }
 	  	</GridItem>
 	  	<GridItem>
 	  	{token && <Link to="/upload"><Text as='b'>Upload</Text></Link> }
