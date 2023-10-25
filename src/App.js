@@ -9,7 +9,7 @@ import UserVideosPage from './components/UserVideosPage';
 import NotFoundPage from './components/NotFoundPage';
 import { PrivateRoute } from './components/PrivateRoute';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
 function App() {
 	return (

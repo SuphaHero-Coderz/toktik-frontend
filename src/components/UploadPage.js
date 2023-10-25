@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
+	Center,
 	Spacer,
 	Flex,
 	Button,
@@ -141,21 +142,24 @@ const UploadPage = () => {
 								<FormErrorMessage>
 									{errors.videoName && errors.videoName.message}
 								</FormErrorMessage>
-								<FormHelperText>Choose a cool name for your video!</FormHelperText>
+								<FormHelperText color="gray.100">Choose a cool name for your video!</FormHelperText>
 								<FormLabel mt="5">Video Description</FormLabel>
 								<Input type='text' {...register("videoDescription")} />
 							</GridItem>
 							<GridItem>
 								<VStack align="center" justify="center" height="100%">
-									<Box height="100%">
+									<Flex height="100%" border="1px" borderColor="white" borderStyle="dashed" rounded="2xl" align="center" justify="center">
+									<Center w="100%">
 										<Input
-											id="video-file"
+											id="video-file" lineHeight="12" mx="5.5em" style={{ border: 'none' }}
 											type="file"
 											accept="video/*"
+											width="100%"
 											height="100%"
 											{...register("videoFile", { required: "Please upload a video!" })}
 										/>
-									</Box>
+									</Center>
+									</Flex>
 								</VStack>
 								<FormErrorMessage>
 									{errors.videoFile && errors.videoFile.message}

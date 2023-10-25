@@ -71,12 +71,12 @@ const RegisterPage = () => {
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>
 					<FormControl isInvalid={errors.username || errors.password}>
-								<FormLabel htmlFor="username" fontWeight="bold">Username</FormLabel>
+								<FormLabel htmlFor="username">Username</FormLabel>
 								<Input id="username" type='text' {...register("username", { required: "Username is required!" })} />
 								<FormErrorMessage>
 									{errors.username && errors.username.message}
 								</FormErrorMessage>
-								<FormLabel mt="5" fontWeight="bold">Password</FormLabel>
+								<FormLabel mt="5">Password</FormLabel>
 								<Input type='password' {...register("password", { required: "Password is required!" })} />
 								<FormErrorMessage>
 									{errors.password && errors.password.message}
