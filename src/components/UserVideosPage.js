@@ -34,13 +34,21 @@ import {
 } from '@chakra-ui/react'
 
 const TableRow = ({ videoInfo }) => {
-	console.log(videoInfo);
+	function processingMessage(processed) {
+		if (processed) {
+			return "Uploaded";
+		}
+		return "Processing...";
+	}
 	return(
 		<Tr>
 			<Td>{videoInfo.video_name}</Td>
 			<Td>{videoInfo.video_description}</Td>
-			<Td>{videoInfo.processed.toString()}</Td>
-			<Td><Button>Edit</Button></Td>
+			<Td>{processingMessage(videoInfo.processed)}</Td>
+			<Td>
+			<Button mr="5" colorScheme="yellow">Edit</Button>
+			<Button colorScheme="red">Delete</Button>
+			</Td>
 		</Tr>
 	);
 }
@@ -81,7 +89,7 @@ const UserVideosPage = () => {
 					  <Tr>
 						<Th>Name</Th>
 						<Th>Description</Th>
-						<Th>Processing</Th>
+						<Th>Status</Th>
 						<Th>Options</Th>
 					  </Tr>
 					</Thead>

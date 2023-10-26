@@ -131,7 +131,7 @@ const UploadPage = () => {
 	return (
 		<Flex height="100vh" align="center" justify="center" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
 			<Container maxW="container.md" mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
-				<Heading mb="10">Upload File</Heading>
+				<Heading mb="10">Upload Video</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>
 					<FormControl isInvalid={errors.videoName || errors.videoFile}>
@@ -148,7 +148,7 @@ const UploadPage = () => {
 							</GridItem>
 							<GridItem>
 								<VStack align="center" justify="center" height="100%">
-									<Flex height="100%" border="1px" borderColor="white" borderStyle="dashed" rounded="2xl" align="center" justify="center">
+									<Flex height="100%" border="1px" borderColor="white" borderStyle="dashed" rounded="md" align="center" justify="center">
 									<Center w="100%">
 										<Input
 											id="video-file" lineHeight="12" mx="5.5em" style={{ border: 'none' }}
