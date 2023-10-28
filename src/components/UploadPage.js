@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
+	Center,
 	Spacer,
 	Flex,
 	Button,
@@ -25,6 +26,7 @@ import {
 const UploadPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isUploading, setIsUploading] = useState(false);
+	const [token, _] = useState(localStorage.getItem("awesomeToken"))
 
 	// For little popups at the bottom of the screen
 	const toast = useToast();
@@ -66,9 +68,7 @@ const UploadPage = () => {
 	 * @param {File} file 
 	 * @param {string} presignedUrl 
 	 */
-	async function uploadToS3(file) {
-		const objectKey = generateRandomFileName();
-		const presignedUrl = await generatePresignedUrl(objectKey);
+	async function uploadToS3(file, presignedUrl) {
 		try {
 			await axios.put(presignedUrl, file, {
 				headers: {
@@ -92,18 +92,10 @@ const UploadPage = () => {
 				isClosable: true,
 			});
 		}
-
-		setIsUploading(false);
-		await notifyBackendOfUploadSuccess(objectKey);
-
-		// Redirect back to home screen
-		setTimeout(() => {
-			window.location.href = '/';
-		}, 3000);
 	}
 
-	async function notifyBackendOfUploadSuccess(objectKey) {
-		await axios.post("http://localhost:80/process_video/", { object_key: objectKey });
+	async function notifyBackendOfUploadSuccess(videoInfo) {
+		await axios.post("http://localhost:80/process_video/", videoInfo, { headers : { Authorization: 'Bearer ' + token }});
 	}
 
 	/**
@@ -111,17 +103,35 @@ const UploadPage = () => {
 	 * 
 	 * @param {*} data 
 	 */
-	function onFormSubmit(data) {
+	async function onFormSubmit(data) {
+		const objectKey = generateRandomFileName();
+		const presignedUrl = await generatePresignedUrl(objectKey);
 		const file = data.videoFile[0];
 
+		const videoInfo = {
+			"object_key" : objectKey,
+			"video_name" : data.videoName,
+			"video_description" : data.videoDescription,
+		}
+
 		setIsUploading(true);
-		uploadToS3(file);
+		await uploadToS3(file, presignedUrl);
+		setIsUploading(false);
+
+		console.log(videoInfo);
+		const response = await notifyBackendOfUploadSuccess(videoInfo);
+		console.log(response);
+
+		// Redirect back to home screen
+		setTimeout(() => {
+			window.location.href = '/';
+		}, 3000);
 	}
 
 	return (
-		<Flex height="100vh" align="center" justify="center">
-			<Container maxW="container.md" mt="10" p="10" shadow="md" rounded="md">
-				<Heading mb="10">Upload File</Heading>
+		<Flex height="100vh" align="center" justify="center" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+			<Container maxW="container.md" mt="10" p="10" shadow="dark-lg" rounded="xl" bg="#1C1C1C" color="white">
+				<Heading mb="10">Upload Video</Heading>
 				<Divider mb="10" />
 				<form onSubmit={handleSubmit(onFormSubmit)}>
 					<FormControl isInvalid={errors.videoName || errors.videoFile}>
@@ -132,21 +142,24 @@ const UploadPage = () => {
 								<FormErrorMessage>
 									{errors.videoName && errors.videoName.message}
 								</FormErrorMessage>
-								<FormHelperText>Choose a cool name for your video!</FormHelperText>
+								<FormHelperText color="gray.100">Choose a cool name for your video!</FormHelperText>
 								<FormLabel mt="5">Video Description</FormLabel>
 								<Input type='text' {...register("videoDescription")} />
 							</GridItem>
 							<GridItem>
 								<VStack align="center" justify="center" height="100%">
-									<Box height="100%">
+									<Flex height="100%" border="1px" borderColor="white" borderStyle="dashed" rounded="md" align="center" justify="center">
+									<Center w="100%">
 										<Input
-											id="video-file"
+											id="video-file" lineHeight="12" mx="5.5em" style={{ border: 'none' }}
 											type="file"
 											accept="video/*"
+											width="100%"
 											height="100%"
 											{...register("videoFile", { required: "Please upload a video!" })}
 										/>
-									</Box>
+									</Center>
+									</Flex>
 								</VStack>
 								<FormErrorMessage>
 									{errors.videoFile && errors.videoFile.message}
@@ -158,7 +171,7 @@ const UploadPage = () => {
 							{ isUploading && <Progress size='xs' isIndeterminate /> }
 							</GridItem>
 							<GridItem justify="flex-end" align="right">
-							<Button type="submit" isLoading={isUploading} loadingText="Uploading" >Upload</Button>
+							<Button type="submit" bg="#673AB7" color="white" isLoading={isUploading} loadingText="Uploading" >Upload</Button>
 							</GridItem>
 						</Grid>
 					</FormControl>
