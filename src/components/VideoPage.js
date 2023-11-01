@@ -124,12 +124,18 @@ function VideoPage() {
 	}
 
   return (
-          <Grid templateColumns='repeat(20, 1fr)' h="100vh" minWidth="100vh" overflowY="hidden">
+		<Flex height="100vh">
+          <Grid templateColumns='repeat(20, 1fr)' h="100%" minWidth="100vh" overflowY="hidden">
                 <GridItem colSpan={14}>
                     <Video objectKey={objectKey}/>
                 </GridItem>
                 <GridItem colSpan={1}>
 	  				<VStack h="100%" bg="#1A1A1A" shadow="dark-lg" align="center" justify="center">
+						<Box boxSize='20%' pt="40" align="center">
+						<Link onClick={() => {navigate('/')}}>
+						  <Image src='/images/close.png' alt='Dan Abramov' filter="invert(1)"/>
+						</Link>
+						</Box>
 						<Box boxSize='20%' pt="40" align="center">
 	  					{ videoIndex > 0 &&
 							<Link onClick={previousVideo}>
@@ -158,6 +164,7 @@ function VideoPage() {
                     </VStack>
                 </GridItem>
           </Grid>
+	  	</Flex>
   );
 }
 
