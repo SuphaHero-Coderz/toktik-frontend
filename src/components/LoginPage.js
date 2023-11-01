@@ -51,12 +51,11 @@ const LoginPage = () => {
 				console.log(response);
 			});
 			setToken(token);
-			await delay(3000);
 			toast({
 				title: 'Success',
 				description: 'Login successful',
 				status: 'success',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		} catch (error) {
@@ -64,14 +63,14 @@ const LoginPage = () => {
 				title: 'Failure',
 				description: `Failed to login: {error}`,
 				status: 'error',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		}
 		setIsSubmitting(false);
 		setTimeout(() => {
 			window.location.href = '/';
-		}, 3000);
+		}, 1000);
 	}
 
 	return (
