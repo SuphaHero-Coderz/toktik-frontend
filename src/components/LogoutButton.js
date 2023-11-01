@@ -8,6 +8,7 @@ const LogoutButton = () => {
     const [token, setToken] = useContext(UserContext);
     const handleLogout = () => {
         setToken(null);
+		localStorage.setItem("awesomeToken", null);
     };
 
     return (
