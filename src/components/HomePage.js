@@ -25,10 +25,10 @@ import {
 	Progress
 } from '@chakra-ui/react'
 
-const VideoCard = ({ videoInfo }) => {
+const VideoCard = ({ videoInfo, videos, index }) => {
 	return (
     <GridItem height="400px" colSpan={1} w="full">
-	<Link to="/video" state={{object_key : videoInfo.object_key}}>
+	<Link to="/video" state={{ videoInfo : videoInfo, videoIndex : index, videos : videos }}>
       <Box position="relative" overflow="hidden" height="400px">
         <Image src={videoInfo.video_thumbnail} alt="Video Thumbnail" height="100%" width="100%" objectFit="cover" />
         <Box position="absolute" bottom="0" left="0" right="0" p={4} bg="rgba(0, 0, 0, 0.7)" color="white">
@@ -57,7 +57,7 @@ const HomePage = () => {
 
 	const videoCards = []
 	for (let i = 0; i < videos.length; i++) {
-		videoCards.push(<VideoCard videoInfo={videos[i]} />);
+		videoCards.push(<VideoCard videoInfo={videos[i]} videos={videos} index={i} />);
 	}
 
 	return (

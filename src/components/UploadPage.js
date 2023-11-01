@@ -46,7 +46,7 @@ const UploadPage = () => {
 		var presignedUrl;
 
 		try {
-			await axios.get(`http://localhost:80/generate_presigned_url/${objectKey}`).then((response) => {
+			await axios.get(`http://localhost:80/api/generate_presigned_url/${objectKey}`).then((response) => {
 				presignedUrl = response.data["presigned_url"];
 			});
 		} catch (error) {
@@ -54,7 +54,7 @@ const UploadPage = () => {
 				title: 'Failure',
 				description: 'Failed to fetch presigned URL.',
 				status: 'error',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		}
@@ -80,7 +80,7 @@ const UploadPage = () => {
 				title: 'Success',
 				description: 'Video uploaded successfully.',
 				status: 'success',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		} catch (error) {
@@ -88,14 +88,14 @@ const UploadPage = () => {
 				title: 'Failure',
 				description: 'Failed to upload video.',
 				status: 'error',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		}
 	}
 
 	async function notifyBackendOfUploadSuccess(videoInfo) {
-		await axios.post("http://localhost:80/process_video/", videoInfo, { headers : { Authorization: 'Bearer ' + token }});
+		await axios.post("http://localhost:80/api/process_video/", videoInfo, { headers : { Authorization: 'Bearer ' + token }});
 	}
 
 	/**
@@ -125,7 +125,7 @@ const UploadPage = () => {
 		// Redirect back to home screen
 		setTimeout(() => {
 			window.location.href = '/';
-		}, 3000);
+		}, 1000);
 	}
 
 	return (

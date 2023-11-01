@@ -1,9 +1,9 @@
 import { AspectRatio } from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Box } from '@chakra-ui/react'
 import { Flex,  Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -12,118 +12,13 @@ import './VideoPage.css'
 function CommentAndVideoTaps() {
     return (
 <Tabs isFitted>
-          <TabList style={{ position: "sticky", top: "0" }} bg="white" mt='5px' mr='4'>
-            <Tab>Comments</Tab>
+          <TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
+            <Tab _selected={{bg: "1A1A1A" }}>Comments</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel >
+            <TabPanel>
                 <Box>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
-                      <Text>Creator, Chakra UI</Text>
+                      <Text>This is a comment, even though comments are not required to be implemented until Project 3.</Text>
                 </Box>
             </TabPanel>
           </TabPanels>
@@ -132,29 +27,30 @@ function CommentAndVideoTaps() {
 }
 
 function UserCard(data) {
- return (
-     <Square h="100%">
-     <Card w = "100%" mt='10px' bg='#f8f8f8' mr='4'>
-      <CardBody>
-        <Flex spacing='4' mb="4">
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
-            <Box>
-              <Text>Username</Text>
-              <Text>12/9/2023 -- 12:30pm</Text>
-            </Box>
-          </Flex>
-        </Flex>
-          <Heading size='sm'>
-	 		Video Name
-          </Heading>
-          <Text>
-	 		This is the description for the video.
-          </Text>
-      </CardBody>
-    </Card>
-    </Square>
- );
+	const videoInfo = data.data;
+	 return (
+		 <Square h="100%" color="white">
+		 <Card w = "100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
+		  <CardBody>
+			<Flex spacing='4' mb="4">
+			  <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+				<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
+				<Box>
+				  <Text>Username</Text>
+				  <Text>{videoInfo.uploaded_date}</Text>
+				</Box>
+			  </Flex>
+			</Flex>
+			  <Heading size='sm'>
+				{videoInfo.video_name}
+			  </Heading>
+			  <Text>
+				{videoInfo.video_description}
+			  </Text>
+		  </CardBody>
+		</Card>
+		</Square>
+	 );
 }
 
 function Video(data) {
@@ -171,7 +67,7 @@ function Video(data) {
 			} catch (error) {
 				console.log(error);
 			}
-	}, []);
+	}, [objectKey]);
     return (
 		<AspectRatio>
 		<Square>
@@ -182,6 +78,8 @@ function Video(data) {
 			playing={true}
 			width="100%"
 			height="100%"
+			loop={true}
+			style={{backgroundColor: '#1C1C1C'}}
 			config={{
 			  file: {
 				hlsOptions: {
@@ -211,16 +109,54 @@ function Video(data) {
 
 function VideoPage() {
 	const location = useLocation();
-	const objectKey = location.state?.object_key;
+	const navigate = useNavigate();
+	const videoInfo = location.state?.videoInfo;
+	const videoIndex = location.state?.videoIndex;
+	const objectKey = videoInfo.object_key;
+	const videos = location.state?.videos;
+
+	function nextVideo() {
+		navigate('/video', { state: { videoInfo: videos[videoIndex+1], videoIndex : videoIndex+1, videos : videos }});
+	}
+
+	function previousVideo() {
+		navigate('/video', { state: { videoInfo: videos[videoIndex-1], videoIndex : videoIndex-1, videos : videos }});
+	}
+
   return (
-          <Grid templateColumns='repeat(6, 1fr)' minHeight="100vh" minWidth="100vh" overflowY="hidden">
-                <GridItem colSpan={4}>
+		<Flex height="100vh">
+          <Grid templateColumns='repeat(20, 1fr)' h="100%" minWidth="100vh" overflowY="hidden">
+                <GridItem colSpan={14}>
                     <Video objectKey={objectKey}/>
                 </GridItem>
-                <GridItem colSpan={2} overflowY="scroll" maxHeight="100vh">
+                <GridItem colSpan={1}>
+	  				<VStack h="100%" bg="#1A1A1A" shadow="dark-lg" align="center" justify="center">
+						<Box boxSize='20%' pt="40" align="center">
+						<Link onClick={() => {navigate('/')}}>
+						  <Image src='/images/close.png' alt='Dan Abramov' filter="invert(1)"/>
+						</Link>
+						</Box>
+						<Box boxSize='20%' pt="40" align="center">
+	  					{ videoIndex > 0 &&
+							<Link onClick={previousVideo}>
+						  <Image src='/images/uparrow.png' alt='Dan Abramov' filter="invert(1)"/>
+							</Link>
+						}
+						</Box>
+						<Spacer />
+						<Box boxSize='20%' pb="40" align="center">
+	  					{ ((videoIndex + 1) < videos.length) && 
+	  					<Link onClick={nextVideo}>
+						  <Image src='/images/uparrow.png' alt='Dan Abramov' transform="rotate(180deg)" filter="invert(1)"/>
+	  					</Link>
+						}
+						</Box>
+	  				</VStack>
+                </GridItem>
+                <GridItem colSpan={5} overflowY="scroll" bg="#1C1C1C" pl="5" color="white">
                     <VStack h='100%'>
                         <Box w="100%">
-                            <UserCard />
+                            <UserCard data={videoInfo}/>
                         </Box>
                         <Box w='100%'>
                             <CommentAndVideoTaps/>
@@ -228,6 +164,7 @@ function VideoPage() {
                     </VStack>
                 </GridItem>
           </Grid>
+	  	</Flex>
   );
 }
 
