@@ -81,6 +81,7 @@ const UserVideosPage = () => {
 			  <Heading mb="5" mx="5">
 				My Videos
 			  </Heading>
+				<Text mb="5" mx="5">In a perfect world, this would have nice design with working edit/delete. But this is not a perfect world.</Text>
 				<Divider mb="5" mx="5"/>
 				<Container maxW="full" shadow="md" mx="5">
 				<TableContainer>
