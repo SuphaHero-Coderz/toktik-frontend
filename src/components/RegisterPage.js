@@ -26,7 +26,6 @@ import { UserContext } from "./UserContext";
 const RegisterPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isSubmitting, setIsSubmitting] = useState(false);
-    const [, setToken] = useContext(UserContext);
     
 	
 	const toast = useToast();
@@ -36,10 +35,7 @@ const RegisterPage = () => {
 		setIsSubmitting(true);
 		var token
 		try {
-			await axios.post(`http://localhost:80/api/users`, { username: data.username, hashed_password: data.password }).then((response) => {
-				token = response.data["access_token"];
-			});
-            setToken(token);
+			await axios.post(`http://localhost:80/api/users`, { username: data.username, hashed_password: data.password }, {withCredentials: true})
 			toast({
 				title: 'Success',
 				description: 'Login successful',

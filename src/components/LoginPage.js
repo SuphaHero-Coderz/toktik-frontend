@@ -26,7 +26,6 @@ import {UserContext} from "./UserContext";
 const LoginPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [, setToken] = useContext(UserContext);
 	
 	const toast = useToast();
 	const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
@@ -39,6 +38,7 @@ const LoginPage = () => {
 
 			let config = {
 			  method: 'post',
+				withCredentials: true,
 			  url: 'http://localhost:80/api/token',
 			  headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
@@ -46,11 +46,7 @@ const LoginPage = () => {
 			  data : data
 			};
 
-			await axios.request(config).then((response) => {
-				token = response.data["access_token"];
-				console.log(response);
-			});
-			setToken(token);
+			await axios.request(config);
 			toast({
 				title: 'Success',
 				description: 'Login successful',

@@ -4,16 +4,13 @@ import axios from 'axios';
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-    const [token, setToken] = useState(localStorage.getItem("awesomeToken"));
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const fetchUser = async () => {
-            localStorage.setItem("awesomeToken", token);
-            var response
 			try {
-			await axios.get(`http://localhost:80/api/users/me`,
-                { headers: { Authorization: 'Bearer ' + token }}).then((response) => {
-			});
+                await axios.get(`http://localhost:80/api/users/me`, { withCredentials: true, headers: { Authorization: 'Bearer ' + token }})
+                setToken(1)
             } catch (error) {
                 setToken(null)
             }

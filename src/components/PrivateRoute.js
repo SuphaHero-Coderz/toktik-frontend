@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import { Route, Navigate, useLocation } from 'react-router-dom';
-export { PrivateRoute };
+import {UserContext} from "./UserContext";
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
-	const token = localStorage.getItem("awesomeToken");
+	const [token, ] = useContext(UserContext)
 	const location = useLocation();
-
-	if (token == "null") {
+	console.log(token);
+	if (token == null) {
+		console.log(token);
 		return <Navigate to="/login" state={{ from: location }} />;
 	} else {
 		return children;
 	}
-
 }
+
+export default PrivateRoute

@@ -7,7 +7,7 @@ import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import UserVideosPage from './components/UserVideosPage';
 import NotFoundPage from './components/NotFoundPage';
-import { PrivateRoute } from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import { BrowserRouter as Router, Route, Routes, Link, Outlet } from 'react-router-dom';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
