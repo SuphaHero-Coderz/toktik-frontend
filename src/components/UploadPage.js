@@ -54,7 +54,7 @@ const UploadPage = () => {
 				title: 'Failure',
 				description: 'Failed to fetch presigned URL.',
 				status: 'error',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		}
@@ -80,7 +80,7 @@ const UploadPage = () => {
 				title: 'Success',
 				description: 'Video uploaded successfully.',
 				status: 'success',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		} catch (error) {
@@ -88,7 +88,7 @@ const UploadPage = () => {
 				title: 'Failure',
 				description: 'Failed to upload video.',
 				status: 'error',
-				duration: 3000,
+				duration: 1000,
 				isClosable: true,
 			});
 		}
@@ -125,7 +125,7 @@ const UploadPage = () => {
 		// Redirect back to home screen
 		setTimeout(() => {
 			window.location.href = '/';
-		}, 3000);
+		}, 1000);
 	}
 
 	return (
