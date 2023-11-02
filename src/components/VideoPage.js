@@ -60,7 +60,7 @@ function Video(data) {
 	const objectKey = data.objectKey;
 	useEffect(() => {
 			try {
-				axios.get(`http://localhost:80/view_video/${objectKey}`).then((response) => {
+				axios.get(`http://localhost:80/api/view_video/${objectKey}`).then((response) => {
 					setSignedM3U8Url(response.data.m3u8_url);
 					setToken(response.data.token);
 					console.log(response);

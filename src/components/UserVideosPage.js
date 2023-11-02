@@ -1,5 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {UserContext} from "./UserContext";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
@@ -54,7 +55,7 @@ const TableRow = ({ videoInfo }) => {
 }
 
 const UserVideosPage = () => {
-	const [token, _] = useState(localStorage.getItem("awesomeToken"))
+	const [token, _] = useContext(UserContext)
 	const [userVideos, setUserVideos] = useState([]);
 
 	async function getAllUserVideos() {
