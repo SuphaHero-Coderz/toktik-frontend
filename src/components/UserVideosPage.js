@@ -61,7 +61,7 @@ const UserVideosPage = () => {
 	async function getAllUserVideos() {
 		var videoList = [];
 		try {
-			const response = await axios.get(`http://localhost:80/api/videos`, { headers: { Authorization : 'Bearer ' + token }});
+			const response = await axios.get(`http://localhost:80/api/videos`, {withCredentials: true, headers: { Authorization : 'Bearer ' + token }});
 			videoList = response.data;
 		} catch (error) {
 			console.error("NOOOOOOOOOOOOOOOOOOOOOOO");

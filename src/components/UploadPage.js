@@ -95,7 +95,7 @@ const UploadPage = () => {
 	}
 
 	async function notifyBackendOfUploadSuccess(videoInfo) {
-		await axios.post("http://localhost:80/api/process_video/", videoInfo, { headers : { Authorization: 'Bearer ' + token }});
+		await axios.post("http://localhost:80/api/process_video/", videoInfo, {withCredentials: true, headers : { Authorization: 'Bearer ' + token }});
 	}
 
 	/**
