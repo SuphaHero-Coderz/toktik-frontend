@@ -47,6 +47,7 @@ function UserCard(data) {
 			  <Text>
 				{videoInfo.video_description}
 			  </Text>
+			  <Text>Views: {videoInfo.views}</Text>
 		  </CardBody>
 		</Card>
 		</Square>
@@ -122,6 +123,15 @@ function VideoPage() {
 	function previousVideo() {
 		navigate('/video', { state: { videoInfo: videos[videoIndex-1], videoIndex : videoIndex-1, videos : videos }});
 	}
+
+	useEffect(() => {
+			try {
+				console.log(videoInfo);
+				axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
+			} catch (error) {
+				console.log(error);
+			}
+	});
 
   return (
 		<Flex height="100vh">
