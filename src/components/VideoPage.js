@@ -2,8 +2,8 @@ import { AspectRatio } from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Box } from '@chakra-ui/react'
-import { Flex,  Heading, Text,  Card, Avatar ,  CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { VStack, Center, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
+import { Flex,  Heading, Text,  Card, Avatar, CardBody } from '@chakra-ui/react'
+import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';

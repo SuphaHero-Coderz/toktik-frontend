@@ -1,8 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
-  useDisclosure,
 	Flex,
 	Container,
 	Heading,
@@ -11,28 +10,21 @@ import {
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
-	FormHelpText,
-	Box,
-	VStack,
 	Input,
-	FormHelperText,
 	Grid,
 	GridItem,
 	useToast
 
 } from '@chakra-ui/react';
-import {UserContext} from "./UserContext";
 
 const LoginPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	
 	const toast = useToast();
-	const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
 
 	async function onFormSubmit(form_data) {
 		setIsSubmitting(true);
-		var token;
 		try {
 			let data = JSON.stringify(`grant_type=&username=${form_data.username}&password=${form_data.password}&scope=&client_id=&client_secret=`);
 

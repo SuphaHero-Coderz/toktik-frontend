@@ -1,26 +1,10 @@
 
-import React, {useContext, useState} from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import React from 'react';
 import {
-  useDisclosure,
 	Flex,
-	Container,
 	Heading,
-	Divider,
-	Button,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	FormHelpText,
-	Box,
-	VStack,
-	Input,
-	FormHelperText,
 	Grid,
 	GridItem,
-	useToast
-
 } from '@chakra-ui/react';
 const NotFoundPage = () => {
 	return (

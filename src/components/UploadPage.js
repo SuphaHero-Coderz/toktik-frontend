@@ -3,11 +3,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
 	Center,
-	Spacer,
-	Flex,
 	Button,
 	VStack,
-	Box,
 	Grid,
 	GridItem,
 	Heading,
@@ -19,6 +16,7 @@ import {
 	FormLabel,
 	FormHelperText,
 	useToast,
+	Flex,
 	Progress
 } from '@chakra-ui/react'
 

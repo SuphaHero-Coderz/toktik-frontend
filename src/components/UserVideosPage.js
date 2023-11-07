@@ -1,36 +1,19 @@
-
 import React, {useContext, useEffect, useState} from 'react';
 import {UserContext} from "./UserContext";
-import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
-	Spacer,
 	Flex,
 	Button,
-	VStack,
-	Box,
-	Grid,
-	GridItem,
 	Heading,
 	Divider,
 	Container,
-	Input,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	FormHelperText,
-	useToast,
-	Image,
 	Text,
-	Progress,
 	Table,
 	Thead,
 	Tbody,
-	Tfoot,
 	Tr,
 	Th,
 	Td,
-	TableCaption,
 	TableContainer,
 } from '@chakra-ui/react'
 

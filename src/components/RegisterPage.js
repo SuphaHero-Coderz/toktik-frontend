@@ -1,27 +1,21 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {
-  useDisclosure,
 	Flex,
 	Container,
 	Heading,
 	Divider,
-  Button,
-  FormControl,
+	Button,
+	FormControl,
 	FormErrorMessage,
 	FormLabel,
-	FormHelpText,
-	Box,
-	VStack,
 	Input,
-	FormHelperText,
 	Grid,
 	GridItem,
 	useToast
 
 } from '@chakra-ui/react'
-import { UserContext } from "./UserContext";
 
 const RegisterPage = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
@@ -29,11 +23,9 @@ const RegisterPage = () => {
     
 	
 	const toast = useToast();
-	const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
 
 	async function onFormSubmit(data) {
 		setIsSubmitting(true);
-		var token
 		try {
 			await axios.post(`http://localhost:80/api/users`, { username: data.username, hashed_password: data.password }, {withCredentials: true})
 			toast({

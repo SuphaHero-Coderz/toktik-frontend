@@ -1,9 +1,7 @@
 import {UserContext} from "./UserContext";
-import {useConst} from "@chakra-ui/react";
 import {useContext} from "react";
 import {Button} from "@chakra-ui/react";
 import axios from 'axios';
-
 
 const LogoutButton = () => {
     const [token, setToken] = useContext(UserContext);

@@ -1,28 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios';
-import NavBar from './NavBar';
 import {
-	Spacer,
 	Flex,
-	Button,
-	VStack,
 	Box,
 	Grid,
 	GridItem,
 	Heading,
 	Divider,
 	Container,
-	Input,
-	FormControl,
-	FormErrorMessage,
-	FormLabel,
-	FormHelperText,
-	useToast,
 	Image,
 	Text,
-	Progress
 } from '@chakra-ui/react'
 
 const VideoCard = ({ videoInfo, videos, index }) => {

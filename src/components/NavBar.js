@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Flex, Spacer, Image, Text, Grid, GridItem } from '@chakra-ui/react';
 import './NavBar.css'
