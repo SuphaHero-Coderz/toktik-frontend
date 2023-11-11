@@ -7,7 +7,6 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
 	const location = useLocation();
 	console.log(token);
 	if (token == null) {
-		console.log(token);
 		return <Navigate to="/login" state={{ from: location }} />;
 	} else {
 		return children;
