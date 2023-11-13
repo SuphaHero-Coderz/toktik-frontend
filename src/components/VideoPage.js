@@ -1,30 +1,30 @@
 import { AspectRatio } from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { useLocation, useNavigate } from "react-router-dom"
-import { Box } from '@chakra-ui/react'
-import { Flex,  Heading, Text,  Card, Avatar, CardBody } from '@chakra-ui/react'
+import { Box, Icon } from '@chakra-ui/react'
+import { Flex, Heading, Text, Card, Avatar, CardBody } from '@chakra-ui/react'
 import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
 import socket from "./socket"
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import './VideoPage.css'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 
 function CommentAndVideoTaps() {
-    return (
-<Tabs isFitted>
-          <TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
-            <Tab _selected={{bg: "1A1A1A" }}>Comments</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-                <Box>
-                      <Text>This is a comment, even though comments are not required to be implemented until Project 3.</Text>
-                </Box>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-    );
+	return (
+		<Tabs isFitted>
+			<TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
+				<Tab _selected={{ bg: "1A1A1A" }}>Comments</Tab>
+			</TabList>
+			<TabPanels>
+				<TabPanel>
+					<Box>
+						<Text>This is a comment, even though comments are not required to be implemented until Project 3.</Text>
+					</Box>
+				</TabPanel>
+			</TabPanels>
+		</Tabs>
+	);
 }
 
 function UserCard(data) {
@@ -66,7 +66,7 @@ function UserCard(data) {
 		  </CardBody>
 		</Card>
 		</Square>
-	 );
+	);
 }
 
 function Video(data) {
@@ -74,53 +74,53 @@ function Video(data) {
 	const [token, setToken] = useState(null);
 	const objectKey = data.objectKey;
 	useEffect(() => {
-			try {
-				axios.get(`http://localhost:80/api/view_video/${objectKey}`, {withCredentials: true}).then((response) => {
-					setSignedM3U8Url(response.data.m3u8_url);
-					setToken(response.data.token);
-					console.log(response);
-				});
-			} catch (error) {
-				console.log(error);
-			}
+		try {
+			axios.get(`http://localhost:80/api/view_video/${objectKey}`, { withCredentials: true }).then((response) => {
+				setSignedM3U8Url(response.data.m3u8_url);
+				setToken(response.data.token);
+				console.log(response);
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	}, [objectKey]);
-    return (
+	return (
 		<AspectRatio>
-		<Square>
+			<Square>
 
-		<ReactPlayer
-			url={signedM3U8Url}
-			controls={true}
-			playing={true}
-			width="100%"
-			height="100%"
-			loop={true}
-			style={{backgroundColor: '#1C1C1C'}}
-			config={{
-			  file: {
-				hlsOptions: {
-				  xhrSetup: function xhrSetup(xhr, url) {
-					xhr.setRequestHeader(
-					  "Access-Control-Allow-Headers",
-					  "Content-Type, Accept, X-Requested-With"
-					);
-					xhr.setRequestHeader(
-					  "Access-Control-Allow-Origin",
-					  "*"
-					);
-					xhr.setRequestHeader(
-					  "Access-Control-Allow-Credentials",
-					  "true"
-					);
-					xhr.open('GET', url + token); // this is your token: ?Policy=foo&Key-Pair-Id=bar&Signature=foobar
-				  }
-				}
-			  }
-			}}
-		  />
-        </Square>
+				<ReactPlayer
+					url={signedM3U8Url}
+					controls={true}
+					playing={true}
+					width="100%"
+					height="100%"
+					loop={true}
+					style={{ backgroundColor: '#1C1C1C' }}
+					config={{
+						file: {
+							hlsOptions: {
+								xhrSetup: function xhrSetup(xhr, url) {
+									xhr.setRequestHeader(
+										"Access-Control-Allow-Headers",
+										"Content-Type, Accept, X-Requested-With"
+									);
+									xhr.setRequestHeader(
+										"Access-Control-Allow-Origin",
+										"*"
+									);
+									xhr.setRequestHeader(
+										"Access-Control-Allow-Credentials",
+										"true"
+									);
+									xhr.open('GET', url + token); // this is your token: ?Policy=foo&Key-Pair-Id=bar&Signature=foobar
+								}
+							}
+						}
+					}}
+				/>
+			</Square>
 		</AspectRatio>
-    );
+	);
 }
 
 function VideoPage() {
@@ -130,65 +130,103 @@ function VideoPage() {
 	const videoIndex = location.state?.videoIndex;
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
+<<<<<<< HEAD
+=======
+	const [liked, setLiked] = useState(false);
+
+>>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 	function nextVideo() {
-		navigate('/video', { state: { videoInfo: videos[videoIndex+1], videoIndex : videoIndex+1, videos : videos }});
+		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
 	}
 
 	function previousVideo() {
-		navigate('/video', { state: { videoInfo: videos[videoIndex-1], videoIndex : videoIndex-1, videos : videos }});
+		navigate('/video', { state: { videoInfo: videos[videoIndex - 1], videoIndex: videoIndex - 1, videos: videos } });
+	}
+	
+	async function handleVideoLike() {
+
+		if (liked) {
+			setLiked(false);
+		}
+		else {
+			setLiked(true);
+		}
+		try {
+			await axios.get(`http://localhost:80/api/process_video_like/${videoInfo.id}`, { withCredentials: true });
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	useEffect(() => {
+<<<<<<< HEAD
 			try {
 				axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
 			} catch (error) {
 				console.log(error);
 			}
 	});
+=======
+		try {
+			axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
+			axios.get(`http://localhost:80/api/get_liked_status/${videoInfo.id}`, { withCredentials: true }).then((response) => {
+				setLiked(response.data.liked);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}, [objectKey]);
+>>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 
-  return (
+	return (
 		<Flex height="100vh">
-          <Grid templateColumns='repeat(20, 1fr)' h="100%" minWidth="100vh" overflowY="hidden">
-                <GridItem colSpan={14}>
-                    <Video objectKey={objectKey}/>
-                </GridItem>
-                <GridItem colSpan={1}>
-	  				<VStack h="100%" bg="#1A1A1A" shadow="dark-lg" align="center" justify="center">
+			<Grid templateColumns='repeat(20, 1fr)' h="100%" minWidth="100vh" overflowY="hidden">
+				<GridItem colSpan={14}>
+					<Video objectKey={objectKey} />
+				</GridItem>
+				<GridItem colSpan={1}>
+					<VStack h="100%" bg="#1A1A1A" shadow="dark-lg" align="center" justify="center">
 						<Box boxSize='20%' pt="40" align="center">
-						<Link onClick={() => {navigate('/')}}>
-						  <Image src='/images/close.png' alt='Dan Abramov' filter="invert(1)"/>
-						</Link>
+							<Link onClick={() => { navigate('/') }}>
+								<Image src='/images/close.png' alt='Dan Abramov' filter="invert(1)" />
+							</Link>
 						</Box>
 						<Box boxSize='20%' pt="40" align="center">
-	  					{ videoIndex > 0 &&
-							<Link onClick={previousVideo}>
-						  <Image src='/images/uparrow.png' alt='Dan Abramov' filter="invert(1)"/>
-							</Link>
-						}
+							{videoIndex > 0 &&
+								<Link onClick={previousVideo}>
+									<Image src='/images/uparrow.png' alt='Dan Abramov' filter="invert(1)" />
+								</Link>
+							}
+						</Box>
+						<Spacer />
+						<Box boxSize='20%' pt="20" align="center">
+								<Link onClick={handleVideoLike}>
+									{ liked ? <Icon as={AiFillHeart} boxSize={8} color="white"/> : <Icon as={AiOutlineHeart} boxSize={8} color="white"/> }
+								</Link>
 						</Box>
 						<Spacer />
 						<Box boxSize='20%' pb="40" align="center">
-	  					{ ((videoIndex + 1) < videos.length) && 
-	  					<Link onClick={nextVideo}>
-						  <Image src='/images/uparrow.png' alt='Dan Abramov' transform="rotate(180deg)" filter="invert(1)"/>
-	  					</Link>
-						}
+							{((videoIndex + 1) < videos.length) &&
+								<Link onClick={nextVideo}>
+									<Image src='/images/uparrow.png' alt='Dan Abramov' transform="rotate(180deg)" filter="invert(1)" />
+								</Link>
+							}
 						</Box>
-	  				</VStack>
-                </GridItem>
-                <GridItem colSpan={5} overflowY="scroll" bg="#1C1C1C" pl="5" color="white">
-                    <VStack h='100%'>
-                        <Box w="100%">
-                            <UserCard data={videoInfo}/>
-                        </Box>
-                        <Box w='100%'>
-                            <CommentAndVideoTaps/>
-                        </Box>
-                    </VStack>
-                </GridItem>
-          </Grid>
-	  	</Flex>
-  );
+					</VStack>
+				</GridItem>
+				<GridItem colSpan={5} overflowY="scroll" bg="#1C1C1C" pl="5" color="white">
+					<VStack h='100%'>
+						<Box w="100%">
+							<UserCard data={videoInfo} />
+						</Box>
+						<Box w='100%'>
+							<CommentAndVideoTaps />
+						</Box>
+					</VStack>
+				</GridItem>
+			</Grid>
+		</Flex>
+	);
 }
 
 export default VideoPage;
