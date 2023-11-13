@@ -130,11 +130,7 @@ function VideoPage() {
 	const videoIndex = location.state?.videoIndex;
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
-<<<<<<< HEAD
-=======
 	const [liked, setLiked] = useState(false);
-
->>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 	function nextVideo() {
 		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
 	}
@@ -159,14 +155,6 @@ function VideoPage() {
 	}
 
 	useEffect(() => {
-<<<<<<< HEAD
-			try {
-				axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
-			} catch (error) {
-				console.log(error);
-			}
-	});
-=======
 		try {
 			axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
 			axios.get(`http://localhost:80/api/get_liked_status/${videoInfo.id}`, { withCredentials: true }).then((response) => {
@@ -176,7 +164,6 @@ function VideoPage() {
 			console.log(error);
 		}
 	}, [objectKey]);
->>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 
 	return (
 		<Flex height="100vh">
