@@ -1,4 +1,4 @@
-import { AspectRatio } from '@chakra-ui/react'
+import {AspectRatio, Button, FormControl, FormErrorMessage, FormLabel, Input} from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Box, Icon } from '@chakra-ui/react'
@@ -8,8 +8,27 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { AiOutlineHeart, AiFillHeart, AiOutlineEye } from 'react-icons/ai'
+import { Textarea } from '@chakra-ui/react'
+import {useForm} from "react-hook-form";
 
 
+function PostCommentBlock(data) {
+	const videoInfo = data.data
+	const { register, handleSubmit, formState: { errors } } = useForm();
+	async function onFormSubmit(form_data) {
+		await axios.post("http://localhost:80/api/comments"
+			, {video_id: `${videoInfo.id}`, content: `${form_data.comment}`}
+			,{withCredentials: true})
+	}
+	return (
+		<form onSubmit={handleSubmit(onFormSubmit)}>
+					<FormControl>
+								<Input id="comment" type='text' {...register("comment")} />
+								<Button type="submit" color="white" bg="#673AB7" >Submit</Button>
+					</FormControl>
+		</form>
+	)
+}
 function CommentBlock(comment) {
 	const [username, setUsername] = useState("")
 	useEffect(() => {
@@ -65,6 +84,7 @@ function CommentAndVideoTaps(data) {
 			<TabPanels>
 				<TabPanel>
 					<Box>
+						<PostCommentBlock data={videoInfo} />
 						{commentCards}
 					</Box>
 				</TabPanel>
