@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { Box } from '@chakra-ui/react'
 import { Flex,  Heading, Text,  Card, Avatar, CardBody } from '@chakra-ui/react'
 import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
+import socket from "./socket"
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -28,6 +29,20 @@ function CommentAndVideoTaps() {
 
 function UserCard(data) {
 	const videoInfo = data.data;
+	const [views, setViews] = useState(videoInfo.views)
+    const ping_views = setInterval(()=>{
+        try{
+            axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
+                .then((response) => {
+                    setViews(response.data)
+                    console.log(response.data)
+                })
+        }
+        catch(error){
+            clearInterval(ping_views)
+        }
+        }
+            , 5000);
 	 return (
 		 <Square h="100%" color="white">
 		 <Card w = "100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
@@ -47,7 +62,7 @@ function UserCard(data) {
 			  <Text>
 				{videoInfo.video_description}
 			  </Text>
-			  <Text>Views: {videoInfo.views}</Text>
+			  <Text>Views: {views}</Text>
 		  </CardBody>
 		</Card>
 		</Square>
@@ -115,7 +130,6 @@ function VideoPage() {
 	const videoIndex = location.state?.videoIndex;
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
-
 	function nextVideo() {
 		navigate('/video', { state: { videoInfo: videos[videoIndex+1], videoIndex : videoIndex+1, videos : videos }});
 	}
@@ -126,7 +140,6 @@ function VideoPage() {
 
 	useEffect(() => {
 			try {
-				console.log(videoInfo);
 				axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
 			} catch (error) {
 				console.log(error);
