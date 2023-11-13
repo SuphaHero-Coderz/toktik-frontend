@@ -7,7 +7,7 @@ import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart, AiOutlineEye } from 'react-icons/ai'
 
 function CommentAndVideoTaps() {
 	return (
@@ -28,6 +28,7 @@ function CommentAndVideoTaps() {
 
 function UserCard(data) {
 	const videoInfo = data.data;
+
 	return (
 		<Square h="100%" color="white">
 			<Card w="100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
@@ -47,8 +48,8 @@ function UserCard(data) {
 					<Text>
 						{videoInfo.video_description}
 					</Text>
-					<Text>Views: {videoInfo.views}</Text>
-					<Text>Likes: {videoInfo.likes}</Text>
+					<Text display="flex" alignItems="center" verticalAlign="center"><Icon as={AiOutlineEye} mr="2" color="white" /> {videoInfo.views}</Text>
+					<Text display="flex" alignItems="center" verticalAlign="center"><Icon as={AiOutlineHeart} mr="2" color="white" /> {videoInfo.likes}</Text>
 				</CardBody>
 			</Card>
 		</Square>
