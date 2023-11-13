@@ -52,7 +52,7 @@ const HomePage = () => {
 	}
 
 	return (
-		<Flex height="100vh" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+		<Flex minH="100vh" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
 			<Grid templateRows="repeat(2, 0.2fr)" w="full" mr="40">
 				<GridItem w="full">
 					<Container mt="100px" mx="20" p="10" shadow="dark-lg" rounded="xl" maxW="full" w="full" bg="#1C1C1C" color="white">
