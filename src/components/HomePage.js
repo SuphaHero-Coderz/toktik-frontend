@@ -14,6 +14,7 @@ import {
 	Icon
 } from '@chakra-ui/react'
 import { AiOutlineHeart, AiOutlineEye } from 'react-icons/ai'
+import socket from "./socket"
 
 const VideoCard = ({ videoInfo, videos, index }) => {
 	return (
@@ -45,6 +46,11 @@ const HomePage = () => {
 			console.error(error);
 		}
 	}, []);
+
+    socket.connect()
+    socket.on("new updates", (data) => {
+    setVideos(JSON.parse(data))
+    })
 
 	const videoCards = []
 	for (let i = 0; i < videos.length; i++) {

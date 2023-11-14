@@ -1,6 +1,5 @@
 import {AspectRatio, Button, FormControl, FormErrorMessage, FormLabel, Input} from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
-import { useLocation, useNavigate } from "react-router-dom"
 import { Box, Icon } from '@chakra-ui/react'
 import { Flex, Heading, Text, Card, Avatar, CardBody } from '@chakra-ui/react'
 import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
@@ -11,27 +10,45 @@ import ReactPlayer from 'react-player';
 import { AiOutlineHeart, AiFillHeart, AiOutlineEye } from 'react-icons/ai'
 import { Textarea } from '@chakra-ui/react'
 import {useForm} from "react-hook-form";
+import {useNavigate,  Navigate, useLocation } from 'react-router-dom';
 
 
 function PostCommentBlock(data) {
 	const videoInfo = data.data
-	const { register, handleSubmit, formState: { errors } } = useForm();
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [isValid, setIsValid] = useState(false);
+	const { register, handleSubmit, reset, formState: { errors } } = useForm();
 	async function onFormSubmit(form_data) {
 		await axios.post("http://localhost:80/api/comments"
 			, {video_id: `${videoInfo.id}`, content: `${form_data.comment}`}
 			,{withCredentials: true})
+        setIsSubmit(true)
 	}
+    useEffect(() => {
+        if(isSubmit){
+            reset()
+            setIsSubmit(false)
+        }
+    }
+    , [isSubmit, reset]);
 	return (
 		<form onSubmit={handleSubmit(onFormSubmit)}>
 					<FormControl>
-								<Input id="comment" type='text' {...register("comment")} />
-								<Button type="submit" color="white" bg="#673AB7" >Submit</Button>
+                                <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                                    <GridItem colSpan={3}>
+								        <Textarea id="comment"  {...register("comment", { required: "need to comment something" })}/>
+                                    </GridItem>
+                                    <GridItem colSpan={1}>
+								        <Button type="submit" color="white" bg="#673AB7" >Submit</Button>
+                                    </GridItem>
+                                </Grid>
 					</FormControl>
 		</form>
 	)
 }
 function CommentBlock(comment) {
 	const [username, setUsername] = useState("")
+
 	useEffect(() => {
 		try {
 			console.log(comment)
@@ -43,21 +60,23 @@ function CommentBlock(comment) {
 		}
 	}, []);
 	return (
-		<Square h="100%" color="white">
-			<Card w="100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
-				<CardBody>
-					<Flex spacing='4' mb="4">
-						<Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+        <Box w='100%'m={2} >
+			<Flex spacing='4' mb="4">
+				<Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                    <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                        <GridItem colSpan={1}>
 							<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
-							<Box>
-								<Text>{username}</Text>
-								<Text>{comment.comment.content}</Text>
-							</Box>
-						</Flex>
-					</Flex>
-				</CardBody>
-			</Card>
-		</Square>
+                        </GridItem>
+                        <GridItem colSpan={3}>
+						    <Box>
+							    <Text>{username}</Text>
+							    <Text>{comment.comment.content}</Text>
+						    </Box>
+                        </GridItem>
+                    </Grid>
+				</Flex>
+			</Flex>
+        </Box>
 	)
 }
 function CommentAndVideoTaps(data) {
@@ -73,6 +92,12 @@ function CommentAndVideoTaps(data) {
 			console.error(error);
 		}
 	}, []);
+
+    socket.connect()
+
+    socket.on("new comments", (data) => {
+    setComments(JSON.parse(data))
+    })
 	const commentCards = []
 	for (let i = 0; i < comments.length; i++) {
 		commentCards.push(<CommentBlock comment={comments[i]} />);
@@ -97,12 +122,17 @@ function CommentAndVideoTaps(data) {
 function UserCard(data) {
 	const videoInfo = data.data;
 	const [views, setViews] = useState(videoInfo.views)
+	const location = useLocation();
     const ping_views = setInterval(()=>{
         try{
             axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
                 .then((response) => {
                     setViews(response.data)
                     console.log(response.data)
+                }).catch((error) => {
+                    console.log(error)
+                    clearInterval(ping_views)
+		            return <Navigate to="/login" state={{ from: location }} />;
                 })
         }
         catch(error){
