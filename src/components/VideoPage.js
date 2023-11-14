@@ -1,4 +1,4 @@
-import { AspectRatio } from '@chakra-ui/react'
+import {AspectRatio, Button, FormControl, FormErrorMessage, FormLabel, Input} from '@chakra-ui/react'
 import { Square, Grid, GridItem } from '@chakra-ui/react'
 import { useLocation, useNavigate } from "react-router-dom"
 import { Box, Icon } from '@chakra-ui/react'
@@ -8,9 +8,75 @@ import socket from "./socket"
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart, AiOutlineEye } from 'react-icons/ai'
+import { Textarea } from '@chakra-ui/react'
+import {useForm} from "react-hook-form";
 
-function CommentAndVideoTaps() {
+
+function PostCommentBlock(data) {
+	const videoInfo = data.data
+	const { register, handleSubmit, formState: { errors } } = useForm();
+	async function onFormSubmit(form_data) {
+		await axios.post("http://localhost:80/api/comments"
+			, {video_id: `${videoInfo.id}`, content: `${form_data.comment}`}
+			,{withCredentials: true})
+	}
+	return (
+		<form onSubmit={handleSubmit(onFormSubmit)}>
+					<FormControl>
+								<Input id="comment" type='text' {...register("comment")} />
+								<Button type="submit" color="white" bg="#673AB7" >Submit</Button>
+					</FormControl>
+		</form>
+	)
+}
+function CommentBlock(comment) {
+	const [username, setUsername] = useState("")
+	useEffect(() => {
+		try {
+			console.log(comment)
+			axios.get(`http://localhost:80/api/users/${comment.comment.user_id}`, {withCredentials: true}).then((response) => {
+				setUsername(response.data.username);
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
+	return (
+		<Square h="100%" color="white">
+			<Card w="100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
+				<CardBody>
+					<Flex spacing='4' mb="4">
+						<Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+							<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
+							<Box>
+								<Text>{username}</Text>
+								<Text>{comment.comment.content}</Text>
+							</Box>
+						</Flex>
+					</Flex>
+				</CardBody>
+			</Card>
+		</Square>
+	)
+}
+function CommentAndVideoTaps(data) {
+	const videoInfo = data.data
+	const [comments, setComments] = useState([]);
+
+	useEffect(() => {
+		try {
+			axios.get(`http://localhost:80/api/get_video_comments/${videoInfo.id}`, {withCredentials: true}).then((response) => {
+				setComments(response.data);
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
+	const commentCards = []
+	for (let i = 0; i < comments.length; i++) {
+		commentCards.push(<CommentBlock comment={comments[i]} />);
+	}
 	return (
 		<Tabs isFitted>
 			<TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
@@ -19,7 +85,8 @@ function CommentAndVideoTaps() {
 			<TabPanels>
 				<TabPanel>
 					<Box>
-						<Text>This is a comment, even though comments are not required to be implemented until Project 3.</Text>
+						<PostCommentBlock data={videoInfo} />
+						{commentCards}
 					</Box>
 				</TabPanel>
 			</TabPanels>
@@ -130,11 +197,7 @@ function VideoPage() {
 	const videoIndex = location.state?.videoIndex;
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
-<<<<<<< HEAD
-=======
 	const [liked, setLiked] = useState(false);
-
->>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 	function nextVideo() {
 		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
 	}
@@ -159,14 +222,6 @@ function VideoPage() {
 	}
 
 	useEffect(() => {
-<<<<<<< HEAD
-			try {
-				axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
-			} catch (error) {
-				console.log(error);
-			}
-	});
-=======
 		try {
 			axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
 			axios.get(`http://localhost:80/api/get_liked_status/${videoInfo.id}`, { withCredentials: true }).then((response) => {
@@ -176,7 +231,6 @@ function VideoPage() {
 			console.log(error);
 		}
 	}, [objectKey]);
->>>>>>> ed0a25047277b2014d91522d10bb73249e638500
 
 	return (
 		<Flex height="100vh">
@@ -220,7 +274,7 @@ function VideoPage() {
 							<UserCard data={videoInfo} />
 						</Box>
 						<Box w='100%'>
-							<CommentAndVideoTaps />
+							<CommentAndVideoTaps data={videoInfo}/>
 						</Box>
 					</VStack>
 				</GridItem>
