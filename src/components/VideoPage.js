@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { Box, Icon } from '@chakra-ui/react'
 import { Flex, Heading, Text, Card, Avatar, CardBody } from '@chakra-ui/react'
 import { VStack, Tabs, TabList, TabPanels, Tab, TabPanel, Image, Spacer, Link } from '@chakra-ui/react'
+import socket from "./socket"
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -95,30 +96,42 @@ function CommentAndVideoTaps(data) {
 
 function UserCard(data) {
 	const videoInfo = data.data;
-
-	return (
-		<Square h="100%" color="white">
-			<Card w="100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
-				<CardBody>
-					<Flex spacing='4' mb="4">
-						<Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-							<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
-							<Box>
-								<Text>Username</Text>
-								<Text>{videoInfo.uploaded_date}</Text>
-							</Box>
-						</Flex>
-					</Flex>
-					<Heading size='sm'>
-						{videoInfo.video_name}
-					</Heading>
-					<Text>
-						{videoInfo.video_description}
-					</Text>
-					<Text display="flex" alignItems="center" verticalAlign="center"><Icon as={AiOutlineEye} mr="2" color="white" /> {videoInfo.views}</Text>
-					<Text display="flex" alignItems="center" verticalAlign="center"><Icon as={AiOutlineHeart} mr="2" color="white" /> {videoInfo.likes}</Text>
-				</CardBody>
-			</Card>
+	const [views, setViews] = useState(videoInfo.views)
+    const ping_views = setInterval(()=>{
+        try{
+            axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
+                .then((response) => {
+                    setViews(response.data)
+                    console.log(response.data)
+                })
+        }
+        catch(error){
+            clearInterval(ping_views)
+        }
+        }
+            , 5000);
+	 return (
+		 <Square h="100%" color="white">
+		 <Card w = "100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
+		  <CardBody>
+			<Flex spacing='4' mb="4">
+			  <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+				<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
+				<Box>
+				  <Text>Username</Text>
+				  <Text>{videoInfo.uploaded_date}</Text>
+				</Box>
+			  </Flex>
+			</Flex>
+			  <Heading size='sm'>
+				{videoInfo.video_name}
+			  </Heading>
+			  <Text>
+				{videoInfo.video_description}
+			  </Text>
+			  <Text>Views: {views}</Text>
+		  </CardBody>
+		</Card>
 		</Square>
 	);
 }
@@ -185,7 +198,6 @@ function VideoPage() {
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
 	const [liked, setLiked] = useState(false);
-
 	function nextVideo() {
 		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
 	}
