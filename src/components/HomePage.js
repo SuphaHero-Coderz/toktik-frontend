@@ -56,16 +56,10 @@ const HomePage = () => {
             .get(`http://localhost:80/api/get_videos/?offset=${index}&length=2`)
             .then((res) => {
                 setItems((prevItems) => [...prevItems, ...res.data]);
-    socket.connect()
-    socket.on("new updates", (data) => {
-    setVideos(JSON.parse(data))
-    })
-
-	const videoCards = []
-	for (let i = 0; i < videos.length; i++) {
-		videoCards.push(<VideoCard videoInfo={videos[i]} videos={videos} index={i} />);
-	}
-
+                socket.connect()
+                socket.on("new updates", (data) => {
+                    setVideos(JSON.parse(data))
+                })
                 res.data.length > 0 ? setHasMore(true) : setHasMore(false);
             })
             .catch((err) => console.log(err));
