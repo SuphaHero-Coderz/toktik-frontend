@@ -81,7 +81,7 @@ const HomePage = () => {
         hasMore={hasMore}
         loader={<p> Loading </p>}
         >
-        {items && items.map((item, i) => <VideoCard videoInfo={item} videos={items} index={i} />)}
+        {items && items.map((item, i) => <VideoCard key={i} videoInfo={item} videos={items} index={i} />)}
         </InfiniteScroll>
         </VStack>
         </Center>

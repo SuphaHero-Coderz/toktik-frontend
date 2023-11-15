@@ -87,7 +87,11 @@ function CommentAndVideoTaps(data) {
 		try {
 			axios.get(`http://localhost:80/api/get_video_comments/${videoInfo.id}`, {withCredentials: true}).then((response) => {
 				setComments(response.data);
-			});
+			}).catch((error) => {
+                    console.log(error)
+		            return ;
+            })
+
 		} catch (error) {
 			console.error(error);
 		}
@@ -100,7 +104,7 @@ function CommentAndVideoTaps(data) {
     })
 	const commentCards = []
 	for (let i = 0; i < comments.length; i++) {
-		commentCards.push(<CommentBlock comment={comments[i]} />);
+		commentCards.push(<CommentBlock id={i} comment={comments[i]} />);
 	}
 	return (
 		<Tabs isFitted>
@@ -120,9 +124,53 @@ function CommentAndVideoTaps(data) {
 }
 
 function UserCard(data) {
+	const [username, setUsername] = useState("")
 	const videoInfo = data.data;
 	const [views, setViews] = useState(videoInfo.views)
+	const [likes, setLikes] = useState(videoInfo.likes)
 	const location = useLocation();
+	useEffect(() => {
+		try {
+			axios.get(`http://localhost:80/api/users/${videoInfo.owner_id}`, {withCredentials: true}).then((response) => {
+				setUsername(response.data.username);
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
+    useEffect(()=>{
+        try{
+            axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
+                .then((response) => {
+                    setViews(response.data)
+                    console.log(response.data)
+                }).catch((error) => {
+                    console.log(error)
+                    return ;
+                })
+        }
+        catch(error){
+            return;
+        }
+    }
+        , []);
+
+    useEffect(()=>{
+        try{
+            axios.get(`http://localhost:80/api/get_likes/${videoInfo.id}`, {withCredentials: true})
+                .then((response) => {
+                    setLikes(response.data)
+                    console.log(response.data)
+                }).catch((error) => {
+                    console.log(error)
+                    return ;
+                })
+        }
+        catch(error){
+            return;
+        }
+    }
+        , []);
     const ping_views = setInterval(()=>{
         try{
             axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
@@ -132,11 +180,28 @@ function UserCard(data) {
                 }).catch((error) => {
                     console.log(error)
                     clearInterval(ping_views)
-		            return <Navigate to="/login" state={{ from: location }} />;
+		            return ;
                 })
         }
         catch(error){
             clearInterval(ping_views)
+        }
+        }
+            , 5000);
+    const ping_likes = setInterval(()=>{
+        try{
+            axios.get(`http://localhost:80/api/get_likes/${videoInfo.id}`, {withCredentials: true})
+                .then((response) => {
+                    setLikes(response.data)
+                    console.log(response.data)
+                }).catch((error) => {
+                    console.log(error)
+                    clearInterval(ping_likes)
+		            return ;
+                })
+        }
+        catch(error){
+            clearInterval(ping_likes)
         }
         }
             , 5000);
@@ -148,7 +213,7 @@ function UserCard(data) {
 			  <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
 				<Avatar name='Segun Adebayo' src='https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg' />
 				<Box>
-				  <Text>Username</Text>
+				  <Text>{username}</Text>
 				  <Text>{videoInfo.uploaded_date}</Text>
 				</Box>
 			  </Flex>
@@ -160,6 +225,7 @@ function UserCard(data) {
 				{videoInfo.video_description}
 			  </Text>
 			  <Text>Views: {views}</Text>
+			  <Text>Likes: {likes}</Text>
 		  </CardBody>
 		</Card>
 		</Square>
@@ -256,7 +322,11 @@ function VideoPage() {
 			axios.get(`http://localhost:80/api/increment_video_views/${videoInfo.id}`);
 			axios.get(`http://localhost:80/api/get_liked_status/${videoInfo.id}`, { withCredentials: true }).then((response) => {
 				setLiked(response.data.liked);
-			});
+			}).catch((error) => {
+                    console.log(error)
+		            return ;
+            })
+ ;
 		} catch (error) {
 			console.log(error);
 		}
