@@ -95,7 +95,7 @@ function CommentAndVideoTaps(data) {
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [videoInfo]);
 
     socket.connect()
 
@@ -137,7 +137,7 @@ function UserCard(data) {
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [videoInfo]);
     useEffect(()=>{
         try{
             axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
@@ -153,7 +153,7 @@ function UserCard(data) {
             return;
         }
     }
-        , []);
+        , [videoInfo]);
 
     useEffect(()=>{
         try{
@@ -294,13 +294,6 @@ function VideoPage() {
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
 	const [liked, setLiked] = useState(false);
-	function nextVideo() {
-		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
-	}
-
-	function previousVideo() {
-		navigate('/video', { state: { videoInfo: videos[videoIndex - 1], videoIndex: videoIndex - 1, videos: videos } });
-	}
 	
 	async function handleVideoLike() {
 
@@ -332,6 +325,13 @@ function VideoPage() {
 		}
 	}, [objectKey]);
 
+	function nextVideo() {
+		navigate('/video', { state: { videoInfo: videos[videoIndex + 1], videoIndex: videoIndex + 1, videos: videos } });
+	}
+
+	function previousVideo() {
+		navigate('/video', { state: { videoInfo: videos[videoIndex - 1], videoIndex: videoIndex - 1, videos: videos } });
+	}
 	return (
 		<Flex height="100vh">
 			<Grid templateColumns='repeat(20, 1fr)' h="100%" minWidth="100vh" overflowY="hidden">
