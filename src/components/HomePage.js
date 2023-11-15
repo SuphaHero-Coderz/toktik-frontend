@@ -17,6 +17,7 @@ import {
     Center
 } from '@chakra-ui/react'
 import { AiOutlineHeart, AiOutlineEye } from 'react-icons/ai'
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const VideoCard = ({ videoInfo, videos, index }) => {
 	return (
@@ -38,35 +39,50 @@ const VideoCard = ({ videoInfo, videos, index }) => {
 
 const HomePage = () => {
 	const [videos, setVideos] = useState([]);
+    const [items, setItems] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [index, setIndex] = useState(2);
 
-	useEffect(() => {
-		try {
-			axios.get('http://localhost:80/api/get_all_videos').then((response) => {
-				setVideos(response.data);
-			});
-		} catch (error) {
-			console.error(error);
-		}
-	}, []);
+    useEffect(() => {
+        axios
+            .get("http://localhost:80/api/get_videos/?offset=0&length=2")
+            .then((res) => setItems(res.data))
+            .catch((err) => console.log(err));
+    }, []);
 
-	const videoCards = []
-	for (let i = 0; i < videos.length; i++) {
-		videoCards.push(<VideoCard videoInfo={videos[i]} videos={videos} index={i} />);
-	}
+    const fetchMoreData = () => {
+        axios
+            .get(`http://localhost:80/api/get_videos/?offset=${index}&length=2`)
+            .then((res) => {
+                setItems((prevItems) => [...prevItems, ...res.data]);
 
-	return (
-		<Flex minH="100vh" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
+                res.data.length > 0 ? setHasMore(true) : setHasMore(false);
+            })
+            .catch((err) => console.log(err));
+
+        setIndex((prevIndex) => prevIndex + 2);
+    };
+
+    return (
+        <Flex minH="100vh" backgroundImage="/images/bg.gif" backgroundRepeat="no-repeat" backgroundPosition="center" backgroundSize="cover">
         <Center minWidth="100%" mt="100px">
-            <VStack
-            divider={<StackDivider borderColor='gray.200' />}
-            spacing={4}
-            align='stretch'
+        <VStack
+        divider={<StackDivider borderColor='gray.200' />}
+        spacing={4}
+        align='stretch'
         >
-							{videoCards}
-            </VStack>
+        <InfiniteScroll
+        dataLength={items.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<p> Loading </p>}
+        >
+        {items && items.map((item, i) => <VideoCard videoInfo={item} videos={items} index={i} />)}
+        </InfiniteScroll>
+        </VStack>
         </Center>
-		</Flex>
-	);
+        </Flex>
+    );
 };
 
 export default HomePage;
