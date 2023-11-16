@@ -51,7 +51,6 @@ function CommentBlock(comment) {
 
 	useEffect(() => {
 		try {
-			console.log(comment)
 			axios.get(`http://localhost:80/api/users/${comment.comment.user_id}`, {withCredentials: true}).then((response) => {
 				setUsername(response.data.username);
 			});
@@ -97,8 +96,6 @@ function CommentAndVideoTaps(data) {
 		}
 	}, [videoInfo]);
 
-
-    socket.connect()
     socket.on("new comments", (data) => {
     setComments(JSON.parse(data))
     })
