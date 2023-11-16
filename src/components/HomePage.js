@@ -52,7 +52,6 @@ const HomePage = () => {
     }, []);
 
     const fetchMoreData = () => {
-        socket.connect()
         axios
             .get(`http://localhost:80/api/get_videos/?offset=${index}&length=2`)
             .then((res) => {

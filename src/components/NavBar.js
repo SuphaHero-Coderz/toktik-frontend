@@ -17,7 +17,7 @@ const NavBar = () => {
 	function configureSocket(user_id, subscriptions) {
 		socket.auth = { user_id: user_id, subscriptions: subscriptions };
 		socket.connect();
-		console.log(`The socket is: {socket.connected}`);
+		console.log(`The socket is: ${socket.connected}`);
 	}
 
 	useEffect(() => {
