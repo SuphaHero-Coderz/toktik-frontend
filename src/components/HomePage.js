@@ -45,6 +45,7 @@ const HomePage = () => {
     const [index, setIndex] = useState(2);
 
     useEffect(() => {
+        socket.connect()
         axios
             .get("http://localhost:80/api/get_videos/?offset=0&length=2")
             .then((res) => setItems(res.data))
@@ -56,7 +57,6 @@ const HomePage = () => {
             .get(`http://localhost:80/api/get_videos/?offset=${index}&length=2`)
             .then((res) => {
                 setItems((prevItems) => [...prevItems, ...res.data]);
-                socket.connect()
                 socket.on("new updates", (data) => {
                     setVideos(JSON.parse(data))
                 })
