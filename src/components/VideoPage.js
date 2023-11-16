@@ -99,6 +99,9 @@ function CommentAndVideoTaps(data) {
     socket.on("new comments", (data) => {
     setComments(JSON.parse(data))
     })
+    socket.on("connect_error", (err) => {
+        console.log(`connect_error due to ${err.message}`);
+    });
 	const commentCards = []
 	for (let i = 0; i < comments.length; i++) {
 		commentCards.push(<CommentBlock id={i} comment={comments[i]} />);
