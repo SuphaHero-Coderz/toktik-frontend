@@ -168,6 +168,7 @@ function UserCard(data) {
         }
     }
         , []);
+    /*
     const ping_views = setInterval(()=>{
         try{
             axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
@@ -202,6 +203,7 @@ function UserCard(data) {
         }
         }
             , 5000);
+            */
 	 return (
 		 <Square h="100%" color="white">
 		 <Card w = "100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">
