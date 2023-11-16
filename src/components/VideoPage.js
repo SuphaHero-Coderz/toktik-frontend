@@ -294,6 +294,10 @@ function VideoPage() {
 	const videos = location.state?.videos;
 	const [liked, setLiked] = useState(false);
     socket.connect()
+    socket.on('error', function (err) {
+        if (err.description) throw err.description;
+        else throw err; // Or whatever you want to do
+    });
 	async function handleVideoLike() {
 
 		if (liked) {
