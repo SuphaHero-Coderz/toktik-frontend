@@ -14,25 +14,41 @@ const NavBar = () => {
 	const [notifications, setNotifications] = useState([]);
 	const [newNotifications, setNewNotifications] = useState(false);
 
+	async function configureSocket(user_id) {
+		socket.auth = { user_id };
+		socket.connect();
+		console.log(`The socket is: {socket.connected}`);
+	}
+
 	useEffect(() => {
+		console.log(typeof(token));
+		if (token == "null") return;
 		try {
-			axios.get(`http://localhost:80/api/get_all_notifications`, {withCredentials: true}).then((response) => {
+			axios.get(`http://localhost:80/api/users/me`, {withCredentials: true}).then((response) => {
+				const user_id = response.data.id;
+				console.log(response.data);
+				console.log(user_id);
+				configureSocket(user_id);
+			})
+
+			axios.get(`http://localhost:80/api/get_all_current_user_notifications`, {withCredentials: true}).then((response) => {
 				const data = response.data;
 				if (response.data.length > 0) {
 					setNewNotifications(!data[0].read);
 					setNotifications(data);
 				}
 			});
+
+			socket.on("new_notification", (data) => {
+				const parsed = JSON.parse(data);
+				setNewNotifications(!parsed[0].read);
+				setNotifications(parsed);
+			})
 		} catch (error) {
 			console.error(error);
 		}
-	}, [newNotifications]);
+	});
 
-	socket.on("new_notification", (data) => {
-		const parsed = JSON.parse(data);
-		setNewNotifications(!parsed[0].read);
-		setNotifications(parsed);
-	})
 
 	function onMenuClose() {
 		try {

@@ -24,6 +24,7 @@ const LoginPage = () => {
 	
 	const toast = useToast();
 
+
 	async function onFormSubmit(form_data) {
 		setIsSubmitting(true);
 		try {
@@ -56,6 +57,7 @@ const LoginPage = () => {
 				isClosable: true,
 			});
 		}
+
 		setIsSubmitting(false);
 		setTimeout(() => {
 			window.location.href = '/';
