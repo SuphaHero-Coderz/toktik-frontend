@@ -97,7 +97,6 @@ function CommentAndVideoTaps(data) {
 		}
 	}, [videoInfo]);
 
-    socket.connect()
 
     socket.on("new comments", (data) => {
     setComments(JSON.parse(data))
@@ -294,7 +293,7 @@ function VideoPage() {
 	const objectKey = videoInfo.object_key;
 	const videos = location.state?.videos;
 	const [liked, setLiked] = useState(false);
-	
+    socket.connect()
 	async function handleVideoLike() {
 
 		if (liked) {
