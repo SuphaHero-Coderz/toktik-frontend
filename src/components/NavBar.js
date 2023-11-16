@@ -14,21 +14,19 @@ const NavBar = () => {
 	const [notifications, setNotifications] = useState([]);
 	const [newNotifications, setNewNotifications] = useState(false);
 
-	async function configureSocket(user_id) {
-		socket.auth = { user_id };
+	function configureSocket(user_id, subscriptions) {
+		socket.auth = { user_id: user_id, subscriptions: subscriptions };
 		socket.connect();
 		console.log(`The socket is: {socket.connected}`);
 	}
 
 	useEffect(() => {
-		console.log(typeof(token));
-		if (token == "null") return;
+		if (token == "null" || token == null) return;
 		try {
-			axios.get(`http://localhost:80/api/users/me`, {withCredentials: true}).then((response) => {
-				const user_id = response.data.id;
-				console.log(response.data);
-				console.log(user_id);
-				configureSocket(user_id);
+			axios.get(`http://localhost:80/api/get_socket_info`, {withCredentials: true}).then((response) => {
+				const user_id = response.data.user_id;
+				const subscriptions = response.data.subscriptions;
+				configureSocket(user_id, subscriptions);
 			})
 
 			axios.get(`http://localhost:80/api/get_all_current_user_notifications`, {withCredentials: true}).then((response) => {
@@ -47,7 +45,7 @@ const NavBar = () => {
 	socket.on("new_notification", (data) => {
 		const parsed = JSON.parse(data);
 		setNewNotifications(true);
-		setNotifications(parsed);
+		setNotifications([...notifications, parsed]);
 	})
 
 	function onMenuClose() {
