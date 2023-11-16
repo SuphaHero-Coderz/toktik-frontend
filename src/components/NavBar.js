@@ -39,16 +39,16 @@ const NavBar = () => {
 				}
 			});
 
-			socket.on("new_notification", (data) => {
-				const parsed = JSON.parse(data);
-				setNewNotifications(!parsed[0].read);
-				setNotifications(parsed);
-			})
 		} catch (error) {
 			console.error(error);
 		}
-	});
+	}, [token, newNotifications]);
 
+	socket.on("new_notification", (data) => {
+		const parsed = JSON.parse(data);
+		setNewNotifications(true);
+		setNotifications(parsed);
+	})
 
 	function onMenuClose() {
 		try {
@@ -61,7 +61,7 @@ const NavBar = () => {
 	}
 
 	return (
-		<Box bgGradient='linear(to-l, #482980, #FF0080)' p={4} pos="fixed" w="100%">
+		<Box bgGradient='linear(to-l, #482980, #FF0080)' p={4} pos="fixed" w="100%" zIndex="dropdown">
 			<Flex maxW="100%" width="100%" align="center">
 				{/* Logo on the left */}
 				<Box>
@@ -79,8 +79,8 @@ const NavBar = () => {
 								<MenuButton mt="6px">
 									<Icon as={AiOutlineBell} boxSize={5} color={newNotifications ? "#FF0080" : "white"} verticalAlign="center" />
 								</MenuButton>
-								<MenuList bg="#1C1C1C">
-									{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) };
+								<MenuList bg="#1C1C1C" h="500px" overflowY="scroll">
+									{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) }
 								</MenuList>
 							</Menu>
 							}
