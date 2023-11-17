@@ -192,15 +192,13 @@ function UserCard(data) {
         }
     }
         , []);
-    /*
+    
     const ping_views = setInterval(()=>{
         try{
             axios.get(`http://localhost:80/api/get_views/${videoInfo.id}`, {withCredentials: true})
                 .then((response) => {
                     setViews(response.data)
-                    console.log(response.data)
                 }).catch((error) => {
-                    console.log(error)
                     clearInterval(ping_views)
 		            return ;
                 })
@@ -215,7 +213,6 @@ function UserCard(data) {
             axios.get(`http://localhost:80/api/get_likes/${videoInfo.id}`, {withCredentials: true})
                 .then((response) => {
                     setLikes(response.data)
-                    console.log(response.data)
                 }).catch((error) => {
                     console.log(error)
                     clearInterval(ping_likes)
@@ -227,7 +224,7 @@ function UserCard(data) {
         }
         }
             , 5000);
-            */
+            
 	 return (
 		 <Square h="100%" color="white">
 		 <Card w = "100%" mt='10px' bg='#1A1A1A' mr='4' color="white" shadow="dark-lg">

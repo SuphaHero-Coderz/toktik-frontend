@@ -82,7 +82,7 @@ const NavBar = () => {
 									<Icon as={AiOutlineBell} boxSize={5} color={newNotifications ? "#FF0080" : "white"} verticalAlign="center" />
 								</MenuButton>
 								<MenuList bg="#1C1C1C" h="500px" overflowY="scroll">
-								//	{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) }
+									{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) }
 								</MenuList>
 							</Menu>
 							}
