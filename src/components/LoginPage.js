@@ -48,6 +48,7 @@ const LoginPage = () => {
 				duration: 1000,
 				isClosable: true,
 			});
+            socket.connect()
 		} catch (error) {
 			toast({
 				title: 'Failure',
