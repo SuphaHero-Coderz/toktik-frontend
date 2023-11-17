@@ -10,14 +10,15 @@ import { AiOutlineBell } from 'react-icons/ai'
 import { useState } from "react";
 
 const NavBar = () => {
+    /*
 	const [token, setToken] = useContext(UserContext)
 	const [notifications, setNotifications] = useState([]);
 	const [newNotifications, setNewNotifications] = useState(false);
 
 	function configureSocket(user_id, subscriptions) {
 		socket.auth = { user_id: user_id, subscriptions: subscriptions };
-		console.log(`The socket is: ${socket.connected}`);
         socket.connect()
+		console.log(`The socket is: ${socket.connected}`);
 	}
 
 	useEffect(() => {
@@ -47,6 +48,7 @@ const NavBar = () => {
 		setNewNotifications(true);
 		setNotifications([...notifications, parsed]);
 	})
+    */
 
 	function onMenuClose() {
 		try {
