@@ -96,6 +96,7 @@ function CommentAndVideoTaps(data) {
 		}
 	}, [videoInfo]);
 
+    socket.connect()
     socket.on("new comments", (data) => {
     setComments(JSON.parse(data))
     })

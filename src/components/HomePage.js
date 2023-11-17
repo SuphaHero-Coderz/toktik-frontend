@@ -43,6 +43,7 @@ const HomePage = () => {
     const [items, setItems] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [index, setIndex] = useState(2);
+    socket.connect()
 
     useEffect(() => {
         axios
