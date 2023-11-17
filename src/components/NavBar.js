@@ -10,14 +10,14 @@ import { AiOutlineBell } from 'react-icons/ai'
 import { useState } from "react";
 
 const NavBar = () => {
-    /*
+    
 	const [token, setToken] = useContext(UserContext)
 	const [notifications, setNotifications] = useState([]);
 	const [newNotifications, setNewNotifications] = useState(false);
 
 	function configureSocket(user_id, subscriptions) {
 		socket.auth = { user_id: user_id, subscriptions: subscriptions };
-        socket.connect()
+        //socket.connect()
 		console.log(`The socket is: ${socket.connected}`);
 	}
 
@@ -59,7 +59,7 @@ const NavBar = () => {
 			console.error(error);
 		}
 	}
-    */
+    
 
 	return (
 		<Box bgGradient='linear(to-l, #482980, #FF0080)' p={4} pos="fixed" w="100%" zIndex="dropdown">
@@ -75,7 +75,7 @@ const NavBar = () => {
 				<Spacer />
 				<Box color="white">
 					<Grid templateColumns="repeat(7, 1fr)" display="flex" verticalAlign="center" alignItems="center">
-                        /*
+                        
 						<GridItem mr="8">
 							{token && <Menu placement='bottom' onClose={onMenuClose}>
 								<MenuButton mt="6px">
@@ -86,7 +86,6 @@ const NavBar = () => {
 								</MenuList>
 							</Menu>
 							}
-                            */
 						</GridItem>
 						<GridItem mr="5">
 							<Link to="/"><Text as='b'>Home</Text></Link>
