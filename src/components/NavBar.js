@@ -28,7 +28,7 @@ const NavBar = () => {
 				const user_id = response.data.user_id;
 				const subscriptions = response.data.subscriptions;
 				configureSocket(user_id, subscriptions);
-			})
+			}).catch(() => {})
 
 			axios.get(`http://localhost:80/api/get_all_current_user_notifications`, {withCredentials: true}).then((response) => {
 				const data = response.data;
@@ -36,7 +36,7 @@ const NavBar = () => {
 					setNewNotifications(!data[0].read);
 					setNotifications(data);
 				}
-			});
+			}).catch(() => {});
 
 		} catch (error) {
 			console.error(error);
