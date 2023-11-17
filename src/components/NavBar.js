@@ -48,7 +48,7 @@ const NavBar = () => {
 		setNewNotifications(true);
 		setNotifications([...notifications, parsed]);
 	})
-    */
+    
 
 	function onMenuClose() {
 		try {
@@ -59,6 +59,7 @@ const NavBar = () => {
 			console.error(error);
 		}
 	}
+    */
 
 	return (
 		<Box bgGradient='linear(to-l, #482980, #FF0080)' p={4} pos="fixed" w="100%" zIndex="dropdown">
@@ -74,16 +75,18 @@ const NavBar = () => {
 				<Spacer />
 				<Box color="white">
 					<Grid templateColumns="repeat(7, 1fr)" display="flex" verticalAlign="center" alignItems="center">
+                        /*
 						<GridItem mr="8">
 							{token && <Menu placement='bottom' onClose={onMenuClose}>
 								<MenuButton mt="6px">
 									<Icon as={AiOutlineBell} boxSize={5} color={newNotifications ? "#FF0080" : "white"} verticalAlign="center" />
 								</MenuButton>
 								<MenuList bg="#1C1C1C" h="500px" overflowY="scroll">
-									{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) }
+								//	{ notifications.map((notification, idx) => ( <MenuItem bg="#1C1C1C" color={notification.read ? "white" : "#FF0080"}>{notification.description}</MenuItem> )) }
 								</MenuList>
 							</Menu>
 							}
+                            */
 						</GridItem>
 						<GridItem mr="5">
 							<Link to="/"><Text as='b'>Home</Text></Link>
