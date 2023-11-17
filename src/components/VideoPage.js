@@ -79,49 +79,69 @@ function CommentBlock(comment) {
 	)
 }
 function CommentAndVideoTaps(data) {
-	const videoInfo = data.data
-	const [comments, setComments] = useState([]);
+    const videoInfo = data.data
+    const [comments, setComments] = useState([]);
 
-	useEffect(() => {
-		try {
-			axios.get(`http://localhost:80/api/get_video_comments/${videoInfo.id}`, {withCredentials: true}).then((response) => {
-				setComments(response.data);
-			}).catch((error) => {
-                    console.log(error)
-		            return ;
-            })
 
-		} catch (error) {
-			console.error(error);
-		}
-	}, [videoInfo]);
+  useEffect(() => {
+    // no-op if the socket is already connected
+    socket.connect();
 
-    socket.connect()
-    socket.on("new comments", (data) => {
-    setComments(JSON.parse(data))
-    })
-    socket.on("connect_error", (err) => {
-        console.log(`connect_error due to ${err.message}`);
-    });
-	const commentCards = []
-	for (let i = 0; i < comments.length; i++) {
-		commentCards.push(<CommentBlock id={i} comment={comments[i]} />);
-	}
-	return (
-		<Tabs isFitted>
-			<TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
-				<Tab _selected={{ bg: "1A1A1A" }}>Comments</Tab>
-			</TabList>
-			<TabPanels>
-				<TabPanel>
-					<Box>
-						<PostCommentBlock data={videoInfo} />
-						{commentCards}
-					</Box>
-				</TabPanel>
-			</TabPanels>
-		</Tabs>
-	);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+    useEffect(() => {
+
+        // Define the handler.
+        function onNewComment(data) {
+            setComments(JSON.parse(data));
+        }
+        function onConnectError(err) {
+      console.log(`connect_error due to ${err.message}`);
+        }
+
+        // Register the handler.
+        socket.on("new comments", onNewComment);
+        socket.on("connect_error", onConnectError);
+
+        try {
+            axios.get(`http://localhost:80/api/get_video_comments/${videoInfo.id}`, {withCredentials: true}).then((response) => {
+                setComments(response.data);
+            }).catch((error) => {
+          console.log(error)
+          return ;
+      })
+        } catch (error) {
+            console.error(error);
+        }
+
+        return () => {
+            socket.off("new comments", onNewComment);
+            socket.off("connect_error", onConnectError);
+        };
+    }, [videoInfo]);
+
+    const commentCards = []
+    for (let i = 0; i < comments.length; i++) {
+        commentCards.push(<CommentBlock id={i} comment={comments[i]} />);
+    }
+    return (
+        <Tabs isFitted>
+            <TabList style={{ position: "sticky", top: "0" }} bg="#1A1A1A" mt='5px' mr='4'>
+                <Tab _selected={{ bg: "1A1A1A" }}>Comments</Tab>
+            </TabList>
+            <TabPanels>
+                <TabPanel>
+                    <Box>
+                        <PostCommentBlock data={videoInfo} />
+                        {commentCards}
+                    </Box>
+                </TabPanel>
+            </TabPanels>
+        </Tabs>
+    );
 }
 
 function UserCard(data) {
